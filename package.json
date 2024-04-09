@@ -1,0 +1,16 @@
+{
+  "name": "lowcode-engine",
+  "private": true,
+  "scripts": {
+    "build:watch": "cd packages/engine && yarn build",
+    "start": "cd packages/engine && yarn start"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "engines": {
+    "node": ">=14.17.0"
+  }
+}
