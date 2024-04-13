@@ -1,5 +1,7 @@
-import { Common } from './api'
+import { Skeleton, Common, Plugins } from './api'
 
 export {
-  Common
+  Skeleton,
+  Common,
+  Plugins
 }
