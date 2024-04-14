@@ -1,6 +1,5 @@
 import { h } from 'vue'
-
-import WidgetView from '../components/widget-views/widget-view'
+import { WidgetView } from '../components/widget-views'
 
 export const isWidget = (obj) => obj && obj.isWidget 
 
@@ -16,7 +15,11 @@ export class Widget {
     }
     this.inited = true
     const { content, contentProps } = this.config
-    this._body = h(content, { ...contentProps, editor: this.skeleton.editor })
+    this._body = h(content, {
+      ...contentProps,
+      config: this.config,
+      editor: this.skeleton.editor
+    })
     return this._body
   }
 
@@ -24,6 +27,14 @@ export class Widget {
     return h(WidgetView, {
       widget: this
     })
+  }
+
+  get contentProps() {
+    return this.config.contentProps
+  }
+
+  get editor() {
+    return this.skeleton.editor
   }
 
   constructor(skeleton, config) {

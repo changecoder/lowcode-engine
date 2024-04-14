@@ -1,9 +1,10 @@
-import { render } from 'vue'
+import { createApp } from 'vue'
+import ElementPlus from 'element-plus'
 
 import {
   Editor
 } from '@cc/lowcode-editor-core'
-import { Plugins, Common, Skeleton } from '@cc/lowcode-shell'
+import { Material, Plugins, Common, Skeleton } from '@cc/lowcode-shell'
 import {
   Skeleton as InnerSkeleton
 } from '@cc/lowcode-editor-skeleton'
@@ -15,6 +16,9 @@ let engineContainer
 
 const editor = new Editor()
 
+const material = new Material(editor)
+editor.set('material', material)
+
 const innerSkeleton = new InnerSkeleton(editor)
 
 const skeleton = new Skeleton(innerSkeleton, 'any')
@@ -24,6 +28,7 @@ const common = new Common(editor, innerSkeleton)
 const pluginContextApiAssembler = {
   assembleApis: (context, pluginName) => {
     context.skeleton = new Skeleton(innerSkeleton, pluginName)
+    context.material = material
   }
 }
 
@@ -47,8 +52,12 @@ export const init = async (container) => {
 
   await plugins.init()
   
-  render(Workbench({
+  const app = createApp(Workbench, {
     skeleton: innerSkeleton,
-    className: 'engine-main'
-  }), engineContainer)
+    className: 'engine-main',
+    topAreaItemClassName: 'engine-actionitem'
+  })
+
+  app.use(ElementPlus)
+  app.mount(engineContainer)
 }

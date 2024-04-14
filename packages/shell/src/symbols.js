@@ -1,4 +1,6 @@
+export const designerSymbol = Symbol('designer')
 export const skeletonSymbol = Symbol('skeleton')
 export const skeletonCabinSymbol = Symbol('skeletonCabin')
 export const pluginsSymbol = Symbol('plugins')
 export const innerPluginsSymbol = Symbol('plugin')
+export const editorSymbol = Symbol('editor')

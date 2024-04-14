@@ -1,10 +1,23 @@
+import { isPanel } from './panel'
+
 export class WidgetContainer {
   items = []
   maps = {}
 
-  constructor(name, handle) {
+  get visible() {
+    return this.checkVisible()
+  }
+
+  constructor(
+    name,
+    handle,
+    exclusive = false,
+    checkVisible = () => true
+  ) {
     this.name = name
     this.handle = handle
+    this.exclusive = exclusive
+    this.checkVisible = checkVisible
   }
 
   get(name) {
@@ -24,6 +37,9 @@ export class WidgetContainer {
       this.items.push(newItem)
     }
     this.maps[newItem.name] = newItem
+    if (isPanel(newItem)) {
+      newItem.setParent(this)
+    }
     return newItem
   }
 }

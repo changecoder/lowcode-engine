@@ -1,8 +1,9 @@
-import { Area, isWidget, Widget, WidgetContainer } from '.'
+import { Area, isWidget, Widget, PanelDock, Panel, isPanel, WidgetContainer, isDockConfig, isPanelDockConfig } from '.'
 
 export class Skeleton {
   containers = new Map()
   widgets = []
+  panels = new Map()
 
   constructor(editor) {
     this.editor = editor
@@ -28,19 +29,52 @@ export class Skeleton {
       },
       false
     )
+    this.leftFloatArea = new Area(
+      this,
+      'leftFloatArea',
+      config => {
+        if (isPanel(config)) {
+          return config
+        }
+        return this.createPanel(config)
+      },
+      true
+    )
+    this.setupPlugins()
   }
 
   createWidget(config) {
     if (isWidget(config)) {
       return config
     }
-    const widget = new Widget(this, config)
+    let widget
+    if (isDockConfig(config)) {
+      if (isPanelDockConfig(config)) {
+        widget = new PanelDock(this, config)
+      }
+    } else {
+      widget = new Widget(this, config)
+    }
+
     this.widgets.push(widget)
     return widget
   }
 
-  createContainer(name, handle) {
-    const container = new WidgetContainer(name, handle)
+  createPanel(config) {
+    const parsedConfig = { ...config }
+    const panel = new Panel(this, parsedConfig)
+    this.panels.set(panel.name, panel)
+    console.debug(`Panel created with name: ${panel.name} \nconfig:`, config, '\n current panels: ', this.panels)
+    return panel
+  }
+
+  createContainer(
+    name,
+    handle,
+    exclusive = false,
+    checkVisible = () => true
+  ) {
+    const container = new WidgetContainer(name, handle, exclusive, checkVisible)
     this.containers.set(name, container)
     return container
   }
@@ -64,7 +98,34 @@ export class Skeleton {
       case 'topArea':
       case 'top':
         return this.topArea.add(parsedConfig)
+      case 'leftFloatArea':
+        return this.leftFloatArea.add(parsedConfig)
       default:
     }
+  }
+
+  buildFromConfig(config, components = {}) {
+    if (config) {
+      this.editor.init(config, components)
+    }
+    this.setupPlugins()
+  }
+
+  setupPlugins() {
+    const { config, components = {} } = this.editor
+    if (!config) {
+      return
+    }
+
+    const { plugins } = config
+    if (!plugins) {
+      return
+    }
+
+    Object.keys(plugins).forEach((area) => {
+      plugins[area].forEach((item) => {
+        console.log(item)
+      })
+    })
   }
 }

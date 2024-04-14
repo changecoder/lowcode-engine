@@ -10,5 +10,8 @@
   "files": [
     "dist",
     "src"
-  ]
+  ],
+  "dependencies": {
+    "@cc/lowcode-utils": "workspace:^"
+  }
 }

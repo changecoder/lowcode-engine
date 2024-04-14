@@ -5,8 +5,8 @@ export class Area {
     return this._visible
   }
 
-  constructor(skeleton, name, handle) {
-    this.container = skeleton.createContainer(name, handle)
+  constructor(skeleton, name, handle, exclusive) {
+    this.container = skeleton.createContainer(name, handle, exclusive, () => this.visible)
   }
 
   isEmpty() {
