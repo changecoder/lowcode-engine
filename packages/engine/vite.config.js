@@ -18,7 +18,7 @@ export default defineConfig({
     },
     sourcemap: true,
     rollupOptions: {
-      external: ['vue', 'element-plus'],
+      external: ['vue', 'element-plus', '@element-plus/icons'],
       output: {
         globals: {
           vue: 'Vue',
