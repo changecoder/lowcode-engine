@@ -3,7 +3,8 @@
     :class="['lc-title', className, { 'has-tip': !!tip }, { 'only-icon': !title.label }]"
     @click="handleClick"
   >
-    <b class="lc-title-icon">{{ title.icon }}</b>
+    <b class="lc-title-icon">
+      <component :is="title.icon" /></b>
   </span>
 </template>
 <script setup>
