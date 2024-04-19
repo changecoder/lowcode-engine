@@ -9,7 +9,19 @@ import { Material, Plugins, Common, Skeleton } from '@cc/lowcode-shell'
 import {
   Skeleton as InnerSkeleton
 } from '@cc/lowcode-editor-skeleton'
-import { LowcodePluginManager } from '@cc/lowcode-designer'
+import { LowcodePluginManager, Designer } from '@cc/lowcode-designer'
+
+import defaultPanelRegistry from './inner-plugins/default-panel-registry'
+
+async function registryInnerPlugin(designer, editor, plugins) {
+  const defaultPanelRegistryPlugin = defaultPanelRegistry(editor)
+
+  await plugins.register(defaultPanelRegistryPlugin)
+
+  return () => {
+    plugins.delete(defaultPanelRegistryPlugin.pluginName)
+  }
+}
 
 export const version = VERSION_PLACEHOLDER
 
@@ -40,6 +52,11 @@ export {
   skeleton,
   plugins
 }
+
+const designer = new Designer({ editor })
+editor.set('designer', designer)
+
+registryInnerPlugin(designer, editor, plugins)
 
 export const init = async (container) => {
   if (container) {

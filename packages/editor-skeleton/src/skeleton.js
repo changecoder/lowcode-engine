@@ -40,6 +40,18 @@ export class Skeleton {
       },
       true
     )
+    this.mainArea = new Area(
+      this,
+      'mainArea',
+      config => {
+        if (isPanel(config)) {
+          return config
+        }
+        return this.createPanel(config)
+      },
+      true,
+      true
+    )
     this.setupPlugins()
   }
 
@@ -98,6 +110,11 @@ export class Skeleton {
       case 'topArea':
       case 'top':
         return this.topArea.add(parsedConfig)
+      case 'mainArea':
+      case 'main':
+      case 'center':
+      case 'centerArea':
+        return this.mainArea.add(parsedConfig)
       case 'leftFloatArea':
         return this.leftFloatArea.add(parsedConfig)
       default:
