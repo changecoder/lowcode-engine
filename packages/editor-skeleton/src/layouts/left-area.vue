@@ -20,11 +20,10 @@ const props = defineProps({
     default: () => 'lc-left-area'
   }
 })
-const { className, area } = props
-const isShow = !area.isEmpty()
+const isShow = !props.area.isEmpty()
 const top = []
 const bottom = []
-area.container.items.slice().sort((a, b) => {
+props.area.container.items.slice().sort((a, b) => {
   const index1 = a.config?.index || 0
   const index2 = b.config?.index || 0
   return index1 === index2 ? 0 : (index1 > index2 ? 1 : -1)

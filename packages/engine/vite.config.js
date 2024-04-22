@@ -27,5 +27,9 @@ export default defineConfig({
       }
     }
   },
-  plugins: [nodePolyfills(), vue(), vueJsx()]
+  plugins: [
+    nodePolyfills(),
+    vue(), 
+    vueJsx()
+  ]
 })

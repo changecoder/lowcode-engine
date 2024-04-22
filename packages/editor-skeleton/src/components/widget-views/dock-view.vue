@@ -2,7 +2,7 @@
   <Title
     :title="composeTitle"
     :class="['lc-dock', className, size ? `lc-dock-${size}` : '']"
-    onClick={onClick}
+    :onClick="onClick"
   />
 </template>
 <script setup>

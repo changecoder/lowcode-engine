@@ -12,6 +12,10 @@ export class PanelDock {
     return this._visible
   }
 
+  get actived() {
+    return this.panel?.visible || false
+  }
+
   get body() {
     if (this.inited) {
       return this._body
@@ -40,6 +44,10 @@ export class PanelDock {
     return this.skeleton.editor
   }
 
+  get panel() {
+    return this._panel || this.skeleton.getPanel(this.panelName)
+  }
+
   constructor(skeleton, config) {
     const { content, contentProps, name, props = {}, panelProps} = config
     this.skeleton = skeleton
@@ -58,5 +66,9 @@ export class PanelDock {
         area: panelProps?.area
       })
     }
+  }
+
+  togglePanel() {
+    this.panel?.toggle()
   }
 }

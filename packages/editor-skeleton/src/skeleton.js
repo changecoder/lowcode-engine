@@ -1,3 +1,4 @@
+import { reactive } from 'vue'
 import { Area, isWidget, Widget, PanelDock, Panel, isPanel, WidgetContainer, isDockConfig, isPanelDockConfig } from '.'
 
 export class Skeleton {
@@ -29,7 +30,18 @@ export class Skeleton {
       },
       false
     )
-    this.leftFloatArea = new Area(
+    this.leftFixedArea = new Area(
+      this,
+      'leftFixedArea',
+      (config) => {
+        if (isPanel(config)) {
+          return config
+        }
+        return this.createPanel(config)
+      },
+      true
+    )
+    this.leftFloatArea = reactive(new Area(
       this,
       'leftFloatArea',
       config => {
@@ -39,7 +51,7 @@ export class Skeleton {
         return this.createPanel(config)
       },
       true
-    )
+    ))
     this.mainArea = new Area(
       this,
       'mainArea',

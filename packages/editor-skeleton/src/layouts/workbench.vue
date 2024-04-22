@@ -25,6 +25,6 @@ const props = defineProps({
   skeleton: Object,
   topAreaItemClassName: String
 })
-const { skeleton, config, components } = props
-skeleton.buildFromConfig(config, components)
+
+props.skeleton.buildFromConfig(props.config, props.components)
 </script>

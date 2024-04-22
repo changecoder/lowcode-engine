@@ -6,5 +6,5 @@
   </div>
 </template>
 <script setup>
-const props = defineProps(['area'])
+defineProps(['area'])
 </script>

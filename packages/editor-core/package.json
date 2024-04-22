@@ -12,6 +12,7 @@
     "src"
   ],
   "dependencies": {
-    "@cc/lowcode-utils": "workspace:^"
+    "@cc/lowcode-utils": "workspace:^",
+    "mobx": "^5.15.0"
   }
 }

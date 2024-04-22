@@ -4,6 +4,11 @@ export class Panel {
   isWidget = true
   isPanel = true
   _actived = false
+  inited = false
+
+  get actived() {
+    return this._actived
+  }
 
   get visible() {
     if (!this.parent || this.parent.visible) {
@@ -28,9 +33,9 @@ export class Panel {
   constructor(skeleton, config) {
     const { content, name, props = {}} = config
     this.skeleton = skeleton
+    this.config = config
     this.name = name
     this.panelName = config.panelName || name
-    this.config = config
     this.align = props.align
     if (Array.isArray(content)) {
       this.container = this.skeleton.createContainer(
@@ -47,6 +52,42 @@ export class Panel {
       )
       content.forEach((item) => this.add(item))
     }
+  }
+
+  isChildOfFloatArea() {
+    return this.parent?.name === 'leftFloatArea'
+  }
+
+  isChildOfFixedArea() {
+    return this.parent?.name === 'leftFixedArea'
+  }
+
+  setActive(flag) {
+    if (flag === this._actived) {
+      return
+    }
+    if (flag) {
+      if (this.isChildOfFloatArea()) {
+        this.skeleton.leftFixedArea.container.unactiveAll()
+      } else if (this.isChildOfFixedArea()) {
+        this.skeleton.leftFloatArea.container.unactiveAll()
+      }
+      this._actived = true
+      this.parent?.active(this)
+      if (!this.inited) {
+        this.inited = true
+      }
+    } else if (this.inited) {
+      if (this.parent?.name && this.name.startsWith(this.parent.name)) {
+        this.inited = false
+      }
+      this._actived = false
+      this.parent?.unactive(this)
+    }
+  }
+
+  toggle() {
+    this.setActive(!this._actived)
   }
 
   setParent(parent) {
