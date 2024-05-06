@@ -16,7 +16,7 @@ export class LowcodePluginManager {
       throw new Error(`Plugin with name ${pluginName} exists`)
     }
 
-    const ctx = this._getLowcodePluginContext({ pluginName, meta })
+    const ctx = this._getLowCodePluginContext({ pluginName, meta })
 
     const config = pluginModel(ctx)
 
@@ -42,7 +42,7 @@ export class LowcodePluginManager {
     }
   }
 
-  _getLowcodePluginContext(options) {
+  _getLowCodePluginContext(options) {
     const { pluginName } = options
     let context = this.pluginContextMap.get(pluginName)
     if (!context) {

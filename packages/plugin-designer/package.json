@@ -13,6 +13,7 @@
   ],
   "dependencies": {
     "@cc/lowcode-designer": "workspace:^",
+    "@cc/lowcode-editor-core": "workspace:^",
     "vue": "^3.4.21"
   }
 }

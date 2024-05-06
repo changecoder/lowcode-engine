@@ -1,15 +1,14 @@
 <template>
   <div class="lc-project">
     <div class="lc-simulator-shell">
-      <Simulator :v-bind="designer.projectSimulatorProps" />
+      <Simulator v-bind="designer.projectSimulatorProps" />
     </div>
   </div>
 </template>
 <script setup>
 import { BuiltinSimulatorHostView } from '../builtin-simulator'
-const designer = defineProps(['designer'])
-const Simulator = designer.simulatorComponent || BuiltinSimulatorHostView
-
+const props = defineProps(['designer'])
+const Simulator = props.designer.simulatorComponent || BuiltinSimulatorHostView
 </script>
 <style lang="less">
 .lc-project {

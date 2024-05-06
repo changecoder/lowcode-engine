@@ -6,7 +6,8 @@ const AssetsCache = {}
 
 export class Editor extends EventEmitter {
   context = new Map()
-
+  waits = new Map()
+  
   constructor() {
     super()
     this.setMaxListeners(200)
@@ -107,4 +108,24 @@ export class Editor extends EventEmitter {
     this.config = config || {}
     this.components = components || {}
   }
+
+  onceGot(keyOrType) {
+    const x = this.context.get(keyOrType)
+    if (x !== undefined) {
+      return Promise.resolve(x)
+    }
+    return new Promise((resolve) => {
+      this.setWait(keyOrType, resolve, true)
+    })
+  }
+
+  setWait(key, resolve, once) {
+    const waits = this.waits.get(key)
+    if (waits) {
+      waits.push({ resolve, once })
+    } else {
+      this.waits.set(key, [{ resolve, once }])
+    }
+  }
+
 }

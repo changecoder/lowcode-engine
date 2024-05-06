@@ -41,6 +41,20 @@ export function isAssetBundle(obj){
   return obj && obj.type === AssetType.Bundle
 }
 
+export function assetBundle(
+  assets,
+  level
+) {
+  if (!assets) {
+    return null
+  }
+  return {
+    type: AssetType.Bundle,
+    assets,
+    level
+  }
+}
+
 export function assetItem(type, content, level, id) {
   if (!content) {
     return null
@@ -220,5 +234,32 @@ export class AssetLoader {
       return
     }
     return isUrl ? load(content, scriptType) : evaluate(content, scriptType);
+  }
+
+  async loadAsyncLibrary(asyncLibraryMap) {
+    const promiseList = []
+    const libraryKeyList = []
+    const pkgs = []
+    for (const key in asyncLibraryMap) {
+      // 需要异步加载
+      if (asyncLibraryMap[key].async) {
+        promiseList.push(window[asyncLibraryMap[key].library])
+        libraryKeyList.push(asyncLibraryMap[key].library)
+        pkgs.push(asyncLibraryMap[key])
+      }
+    }
+    await Promise.all(promiseList).then((mods) => {
+      if (mods.length > 0) {
+        mods.map((item, index) => {
+          const { exportMode, exportSourceLibrary, library } = pkgs[index]
+          window[libraryKeyList[index]] =
+            exportMode === 'functionCall' &&
+            (exportSourceLibrary == null || exportSourceLibrary === library)
+              ? item()
+              : item
+          return item
+        })
+      }
+    })
   }
 }
