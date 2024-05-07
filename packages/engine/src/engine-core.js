@@ -3,9 +3,10 @@ import ElementPlus from 'element-plus'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 import {
-  Editor
+  Editor,
+  engineConfig
 } from '@cc/lowcode-editor-core'
-import { Material, Plugins, Common, Skeleton } from '@cc/lowcode-shell'
+import { Material, Plugins, Common, Skeleton, Config } from '@cc/lowcode-shell'
 import {
   Skeleton as InnerSkeleton
 } from '@cc/lowcode-editor-skeleton'
@@ -31,6 +32,7 @@ const editor = new Editor()
 
 const material = new Material(editor)
 editor.set('material', material)
+const config = new Config(engineConfig)
 
 const innerSkeleton = new InnerSkeleton(editor)
 
@@ -42,6 +44,7 @@ const pluginContextApiAssembler = {
   assembleApis: (context, pluginName) => {
     context.skeleton = new Skeleton(innerSkeleton, pluginName)
     context.material = material
+    context.config = config
   }
 }
 

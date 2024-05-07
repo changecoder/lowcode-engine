@@ -1,19 +1,60 @@
 import { get as lodashGet } from 'lodash'
 
+import Preference from './utils/preference'
+
 export class EngineConfig {
   waits = new Map()
 
   constructor(config) {
     this.config = config || {}
+    this.preference = new Preference()
   }
 
+  /**
+   * 获取指定 key 的值
+   * @param key
+   * @param defaultValue
+   */
   get(key, defaultValue) {
     return lodashGet(this.config, key, defaultValue)
   }
-  
+
+  /**
+   * 设置指定 key 的值
+   * @param key
+   * @param value
+   */ 
   set(key, value) {
     this.config[key] = value
     this.notifyGot(key)
+  }
+
+  /**
+   * 批量设值，set 的对象版本
+   * @param config
+   */
+  has(key) {
+    return this.config[key] !== undefined
+  }
+
+  /**
+   * 批量设值，set 的对象版本
+   * @param config
+   */
+  setConfig(config) {
+    if (config) {
+      Object.keys(config).forEach((key) => {
+        this.set(key, config[key])
+      })
+    }
+  }
+
+  /**
+   * 获取全局 Preference 管理器
+   * 用于管理全局浏览器侧用户 Preference
+   */
+  getPreference() {
+    return this.preference
   }
 
   /**
