@@ -1,5 +1,5 @@
 {
-  "name": "@cc/lowcode-editor-core",
+  "name": "@cc/lowcode-workspace",
   "version": "1.0.0",
   "main": "dist/index.umd.js",
   "module": "dist/index.esm.js",
@@ -12,9 +12,6 @@
     "src"
   ],
   "dependencies": {
-    "@cc/lowcode-utils": "workspace:^",
-    "lodash": "^4.17.21",
-    "power-di": "^2.4.37",
-    "store": "^2.0.12"
+    "@cc/lowcode-editor-core": "workspace:^"
   }
 }

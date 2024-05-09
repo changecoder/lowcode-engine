@@ -1,9 +1,12 @@
-import { Material, Skeleton, Common, Plugins, Config } from './api'
+import { Material, Skeleton, Common, Plugins, Config, Project } from './api'
+import { Dragon } from './model'
 
 export {
   Material,
   Skeleton,
   Common,
   Plugins,
-  Config
+  Config,
+  Project,
+  Dragon
 }

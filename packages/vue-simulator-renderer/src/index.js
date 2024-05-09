@@ -1,9 +1,7 @@
-import simulator from './simulator'
+import renderer from './renderer'
 
-const win = window
-
-if (typeof win !== 'undefined') {
-  win.SimulatorRenderer = simulator
+if (typeof window !== 'undefined') {
+  window.SimulatorRenderer = renderer
 }
 
-export default simulator
+export default renderer

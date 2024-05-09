@@ -12,6 +12,7 @@
     "src"
   ],
   "dependencies": {
+    "@cc/lowcode-editor-core": "workspace:^",
     "@cc/lowcode-editor-skeleton": "workspace:^1.0.0",
     "vue": "^3.4.21"
   }

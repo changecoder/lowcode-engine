@@ -1,4 +1,4 @@
-import { createModuleEventBus } from '@cc/lowcode-utils'
+import { createModuleEventBus } from '@cc/lowcode-editor-core'
 
 export class DocumentModel {
   constructor(project, schema) {

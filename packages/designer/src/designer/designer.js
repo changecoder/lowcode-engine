@@ -1,4 +1,5 @@
 import { Project } from '../project'
+import { Dragon } from './dragon'
 
 export class Designer {
 
@@ -29,6 +30,7 @@ export class Designer {
     this.setProps(props)
 
     this.project = new Project(this, props.defaultSchema, viewName)
+    this.dragon = new Dragon(this)
   }
 
   setProps(nextProps) {

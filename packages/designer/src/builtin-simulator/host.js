@@ -82,6 +82,15 @@ export class BuiltinSimulatorHost {
     return this._props[key]
   }
 
+  /**
+   * 有 Renderer 进程连接进来，设置同步机制
+   */
+  connect(
+    renderer
+  ) {
+    this._renderer = renderer
+  }
+
   async mountContentFrame(iframe) {
     if (!iframe || this._iframe === iframe) {
       return

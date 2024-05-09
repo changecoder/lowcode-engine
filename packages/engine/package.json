@@ -22,6 +22,7 @@
     "@cc/lowcode-editor-skeleton": "workspace:^1.0.0",
     "@cc/lowcode-plugin-designer": "workspace:^",
     "@cc/lowcode-shell": "workspace:^1.0.0",
+    "@cc/lowcode-workspace": "workspace:^",
     "@element-plus/icons-vue": "^2.3.1",
     "element-plus": "^2.7.0",
     "vue": "^3.4.21"

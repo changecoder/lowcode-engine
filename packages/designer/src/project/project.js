@@ -93,6 +93,11 @@ export class Project {
     this.emitter.emit('lowcode_engine_simulator_ready', simulator)
   }
 
+  setRendererReady(renderer) {
+    this.isRendererReady = true
+    this.emitter.emit('lowcode_engine_renderer_ready', renderer)
+  }
+
   onSimulatorReady(fn) {
     if (this._simulator) {
       fn(this._simulator)
@@ -100,6 +105,16 @@ export class Project {
     }
     return () => {
       
+    }
+  }
+
+  onRendererReady(fn) {
+    if (this.isRendererReady) {
+      fn()
+    }
+    this.emitter.on('lowcode_engine_renderer_ready', fn)
+    return () => {
+      this.emitter.removeListener('lowcode_engine_renderer_ready', fn)
     }
   }
 }

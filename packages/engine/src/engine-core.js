@@ -3,10 +3,21 @@ import ElementPlus from 'element-plus'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 import {
+  globalContext,
   Editor,
   engineConfig
 } from '@cc/lowcode-editor-core'
-import { Material, Plugins, Common, Skeleton, Config } from '@cc/lowcode-shell'
+import {
+  Workspace as InnerWorkspace
+} from '@cc/lowcode-workspace'
+import {
+  Project,
+  Material,
+  Plugins,
+  Common,
+  Skeleton,
+  Config
+} from '@cc/lowcode-shell'
 import {
   Skeleton as InnerSkeleton
 } from '@cc/lowcode-editor-skeleton'
@@ -24,27 +35,42 @@ async function registryInnerPlugin(designer, editor, plugins) {
   }
 }
 
+const innerWorkspace = new InnerWorkspace(registryInnerPlugin)
+globalContext.register(innerWorkspace, 'workspace')
+
 export const version = VERSION_PLACEHOLDER
 
 let engineContainer
 
 const editor = new Editor()
+globalContext.register(editor, 'editor')
 
 const material = new Material(editor)
 editor.set('material', material)
-const config = new Config(engineConfig)
 
 const innerSkeleton = new InnerSkeleton(editor)
+editor.set('skeleton', innerSkeleton)
+
+const designer = new Designer({ editor })
+editor.set('designer', designer)
+
+const { project: innerProject } = designer
+
+const project = new Project(innerProject)
+editor.set('project', project)
 
 const skeleton = new Skeleton(innerSkeleton, 'any')
-
+const config = new Config(engineConfig)
 const common = new Common(editor, innerSkeleton)
 
 const pluginContextApiAssembler = {
   assembleApis: (context, pluginName) => {
+    context.project = project
     context.skeleton = new Skeleton(innerSkeleton, pluginName)
     context.material = material
     context.config = config
+    context.common = common
+    editor.set('pluginContext', context)
   }
 }
 
@@ -58,9 +84,6 @@ export {
   skeleton,
   plugins
 }
-
-const designer = new Designer({ editor })
-editor.set('designer', designer)
 
 registryInnerPlugin(designer, editor, plugins)
 
