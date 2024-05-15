@@ -3,9 +3,23 @@ import { createApp } from 'vue'
 import SimulatorRendererView from './renderer-view.vue'
 import { host } from './host'
 
+export class DocumentInstance {
+  instancesMap = new Map()
+
+  get schema() {
+    return this.document.export('render')
+  }
+
+  constructor(container, document) {
+    this.container = container
+    this.document = document
+  }
+}
+
 export class SimulatorRendererContainer {
   isSimulatorRenderer = true
   disposeFunctions = []
+  _documentInstances = []
   _components = {}
   _libraryMap = {}
   _appContext = {}
@@ -37,6 +51,10 @@ export class SimulatorRendererContainer {
     return this._componentsMap
   }
 
+  get documentInstances() {
+    return this._documentInstances
+  }
+
   /**
    * 是否为画布自动渲染
    */
@@ -50,11 +68,22 @@ export class SimulatorRendererContainer {
   constructor() {
     this.autoRender = host.autoRender
 
+    const documentInstanceMap = new Map()
+
     this.disposeFunctions.push(host.connect(this, () => {
       this._designMode = host.designMode
       this._requestHandlersMap = host.requestHandlersMap
       this._device = host.device
     }))
+
+    this._documentInstances = host.project.documents.map((doc) => {
+      let inst = documentInstanceMap.get(doc.id)
+      if (!inst) {
+        inst = new DocumentInstance(this, doc)
+        documentInstanceMap.set(doc.id, inst)
+      }
+      return inst
+    })
 
     this._appContext = {
       utils: {},

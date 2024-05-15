@@ -53,7 +53,7 @@ export class BuiltinSimulatorHost {
     this.project = project
     this.designer = designer
 
-    this.componentsConsumer = new ResourceConsumer(() => this.componentsAsset)
+    this.componentsConsumer = new ResourceConsumer()
 
     engineConfig.onGot('appHelper', (data) => {
       // appHelper被config.set修改后触发injectionConsumer.consume回调

@@ -84,6 +84,7 @@ export function createSimulator(
         ${styleFrags}
       </head>
       <body>
+        <div id="app" /> 
         ${scriptFrags}
       </body>
     </html>`
