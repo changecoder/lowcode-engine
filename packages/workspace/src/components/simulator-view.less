@@ -1,0 +1,45 @@
+.engine-workspace {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+
+  .workspace-top-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+  }
+
+  .workspace-center-area {
+    display: flex;
+    flex-direction: row;
+    height: calc(100vh - 100px);
+
+    iframe {
+      border: none;
+      background-color: #F0F0F0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .workspace-left-area {
+      width: 10%;
+      padding: 10px;
+    }
+
+    .workspace-main-area {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 80%;
+
+    }
+
+    .workspace-right-area {
+      width: 10%;
+      padding: 10px;
+    }
+  }
+}

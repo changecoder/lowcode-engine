@@ -1,5 +1,5 @@
 {
-  "name": "@cc/lowcode-workspace",
+  "name": "@cc/lowcode-vue-simulator",
   "version": "1.0.0",
   "main": "dist/index.umd.js",
   "module": "dist/index.esm.js",
@@ -10,9 +10,5 @@
   "files": [
     "dist",
     "src"
-  ],
-  "dependencies": {
-    "@cc/lowcode-vue-simulator": "1.0.0",
-    "vue": "^3.4.21"
-  }
+  ]
 }

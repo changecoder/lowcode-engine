@@ -4,27 +4,20 @@
   "main": "dist/index.umd.js",
   "module": "dist/index.esm.js",
   "exports": {
-    ".": "./src/index.js",
-    "./src/*": "./src/*.js"
+    ".": "./src/index.ts",
+    "./src/*": "./src/*.ts"
   },
   "files": [
     "dist",
     "src"
   ],
   "scripts": {
-    "preview": "vite preview --port 8080",
+    "preview": "vite preview --port 5080",
     "build": "vite build",
     "build:watch": "vite build --watch"
   },
   "dependencies": {
-    "@cc/lowcode-designer": "workspace:^1.0.0",
-    "@cc/lowcode-editor-core": "workspace:^1.0.0",
-    "@cc/lowcode-editor-skeleton": "workspace:^1.0.0",
-    "@cc/lowcode-plugin-designer": "workspace:^",
-    "@cc/lowcode-shell": "workspace:^1.0.0",
-    "@cc/lowcode-workspace": "workspace:^",
-    "@element-plus/icons-vue": "^2.3.1",
-    "element-plus": "^2.7.0",
+    "@cc/lowcode-workspace": "1.0.0",
     "vue": "^3.4.21"
   },
   "devDependencies": {

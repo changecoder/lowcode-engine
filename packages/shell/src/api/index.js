@@ -1,6 +1,0 @@
-export * from './common'
-export * from './plugins'
-export * from './skeleton'
-export * from './material'
-export * from './config'
-export * from './project'

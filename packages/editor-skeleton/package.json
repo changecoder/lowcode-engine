@@ -1,18 +1,4 @@
 {
   "name": "@cc/lowcode-editor-skeleton",
-  "version": "1.0.0",
-  "main": "dist/index.umd.js",
-  "module": "dist/index.esm.js",
-  "exports": {
-    ".": "./src/index.js",
-    "./src/*": "./src/*.js"
-  },
-  "files": [
-    "dist",
-    "src"
-  ],
-  "dependencies": {
-    "@cc/lowcode-editor-core": "workspace:^",
-    "vue": "^3.4.21"
-  }
+  "version": "1.0.0"
 }
