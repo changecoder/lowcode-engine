@@ -17,6 +17,9 @@
     "build:watch": "vite build --watch"
   },
   "dependencies": {
+    "@cc/lowcode-designer": "1.0.0",
+    "@cc/lowcode-editor-core": "1.0.0",
+    "@cc/lowcode-shell": "1.0.0",
     "@cc/lowcode-workspace": "1.0.0",
     "vue": "^3.4.21"
   },

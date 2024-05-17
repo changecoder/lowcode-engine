@@ -1,5 +1,5 @@
 {
-  "name": "@cc/lowcode-editor-skeleton",
+  "name": "@cc/lowcode-editor-core",
   "version": "1.0.0",
   "main": "dist/index.umd.js",
   "module": "dist/index.esm.js",
