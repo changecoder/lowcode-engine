@@ -1,0 +1,17 @@
+{
+  "name": "@cc/lowcode-types",
+  "version": "1.0.0",
+  "main": "dist/index.umd.js",
+  "module": "dist/index.esm.js",
+  "exports": {
+    ".": "./src/index.ts",
+    "./src/*": "./src/*.ts"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "dependencies": {
+    "strict-event-emitter-types": "^2.0.0"
+  }
+}

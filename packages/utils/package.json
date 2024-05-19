@@ -4,8 +4,8 @@
   "main": "dist/index.umd.js",
   "module": "dist/index.esm.js",
   "exports": {
-    ".": "./src/index.js",
-    "./src/*": "./src/*.js"
+    ".": "./src/index.ts",
+    "./src/*": "./src/*.ts"
   },
   "files": [
     "dist",
