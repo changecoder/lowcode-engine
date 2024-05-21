@@ -1,0 +1,41 @@
+@scope: lc-simulator;
+
+.@{scope} {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+
+  &-canvas {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  &-device-default {
+    top: var(--simulator-top-distance, 16px);
+    right: var(--simulator-right-distance, 16px);
+    bottom: var(--simulator-bottom-distance, 16px);
+    left: var(--simulator-left-distance, 16px);
+    width: auto;
+    box-shadow: 0 1px 4px 0 var(--color-block-background-shallow, rgba(31, 50, 88, 0.125));
+  }
+
+  &-content {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    &-frame {
+      border: none;
+      transform-origin: 0 0;
+      height: 100%;
+      width: 100%;
+    }
+  }
+}

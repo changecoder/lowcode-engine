@@ -11,6 +11,8 @@ export interface IProject {
 
   get documents(): IDocumentModel[]
 
+  mountSimulator(simulator: any): void
+
   open(doc?: string | IDocumentModel | IPublicTypeRootSchema): IDocumentModel | null
 
   load(schema?: IPublicTypeProjectSchema, autoOpen?: boolean | string): void
@@ -22,7 +24,7 @@ export class Project implements IProject {
   private emitter: IEventBus = createModuleEventBus('Project')
   private isRendererReady: boolean = false
   readonly documents: IDocumentModel[] = []
-
+  simulator: any
   private data: IPublicTypeProjectSchema = {
     version: '1.0.0',
     componentsMap: [],
@@ -54,5 +56,9 @@ export class Project implements IProject {
     return () => {
       this.emitter.removeListener('lowcode_engine_renderer_ready', fn)
     }
+  }
+
+  mountSimulator(simulator: any) {
+    this.simulator = simulator
   }
 }

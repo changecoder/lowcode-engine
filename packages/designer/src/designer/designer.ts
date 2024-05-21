@@ -24,7 +24,13 @@ export class Designer implements IDesigner {
 
   get projectSimulatorProps(): any {
     return {
-      ...(this.simulatorProps || {})
+      ...(this.simulatorProps || {}),
+      project: this.project,
+      designer: this,
+      onMount: (simulator: any) => {
+        this.project.mountSimulator(simulator)
+        this.editor.set('simulator', simulator)
+      }
     }
   }
 

@@ -8,5 +8,7 @@ export interface IPublicModelEditor extends StrictEventEmitter<EventEmitter, Glo
 
   get: (keyOrType: any) => any
 
+  set: (key: any, data: any) => void | Promise<void>
+  
   setAssets(assets: IPublicTypeAssetsJson): void
 }
