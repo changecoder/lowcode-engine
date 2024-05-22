@@ -5,7 +5,8 @@ import './host.less'
 export const BuiltinSimulatorHostView = defineComponent({
   name: 'BuiltinSimulatorHostView',
   props: {
-    project: Object
+    project: Object,
+    designer: Object
   },
   setup(props: any) {
     const { project, designer } = props

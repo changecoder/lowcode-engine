@@ -13,6 +13,7 @@
   ],
   "dependencies": {
     "@cc/lowcode-editor-core": "1.0.0",
-    "@cc/lowcode-types": "1.0.0"
+    "@cc/lowcode-types": "1.0.0",
+    "@cc/lowcode-utils": "1.0.0"
   }
 }

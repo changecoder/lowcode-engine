@@ -52,6 +52,7 @@ const pluginContextApiAssembler = {
 }
 const innerPlugins = new LowCodePluginManager(pluginContextApiAssembler)
 const plugins = new Plugins(innerPlugins)
+editor.set('innerPlugins', innerPlugins)
 
 export {
   plugins

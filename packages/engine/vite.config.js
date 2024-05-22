@@ -13,7 +13,7 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
       name: 'CCLowcodeEngine',
-      fileName: 'lowcode-engine',
+      fileName: () => 'lowcode-engine.js',
       formats: ['esm', 'umd']
     },
     sourcemap: true,
@@ -24,7 +24,8 @@ export default defineConfig({
           vue: 'Vue',
           'element-plus': 'ElementPlus'
         }
-      }
+      },
+      assetFileNames: 'lowcode-engine.css'
     }
   },
   plugins: [

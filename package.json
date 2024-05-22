@@ -6,16 +6,13 @@
     ]
   },
   "scripts": {
-    "start": "concurrently \"pnpm build:watch\" \"pnpm preview\"",
-    "build": "pnpm -C packages/engine build",
-    "build:watch": "pnpm -C packages/engine build:watch",
-    "preview": "pnpm -C packages/engine preview"
+    "start": "node ./scripts/start.mjs"
   },
   "engines": {
     "node": ">=14.17.0"
   },
   "dependencies": {
-    "concurrently": "^8.2.2",
+    "express": "^4.19.2",
     "lodash": "^4.17.21",
     "vue": "^3.4.27"
   },
