@@ -1,4 +1,4 @@
-import { IPublicTypeProjectSchema, IPublicTypeRootSchema } from '@cc/lowcode-types'
+import { IPublicTypeComponentsMap, IPublicTypeProjectSchema, IPublicTypeRootSchema } from '@cc/lowcode-types'
 import { IEventBus, createModuleEventBus } from '@cc/lowcode-editor-core'
 import { IDocumentModel } from '..'
 
@@ -11,11 +11,17 @@ export interface IProject {
 
   get documents(): IDocumentModel[]
 
+  simulator: any
+  
   mountSimulator(simulator: any): void
 
   open(doc?: string | IDocumentModel | IPublicTypeRootSchema): IDocumentModel | null
 
   load(schema?: IPublicTypeProjectSchema, autoOpen?: boolean | string): void
+
+  getSchema(
+    stage?: string,
+  ): IPublicTypeProjectSchema
 
   onRendererReady(fn: () => void): () => void
 }
@@ -40,6 +46,23 @@ export class Project implements IProject {
     this.load(schema)
   }
 
+  /**
+   * 获取项目整体 schema
+   */
+  getSchema(
+    stage: string = 'save'
+  ): IPublicTypeProjectSchema {
+    return {
+      ...this.data,
+      componentsMap: this.getComponentsMap(),
+      componentsTree: []
+    }
+  }
+
+  private getComponentsMap(): IPublicTypeComponentsMap {
+    return []
+  }
+  
   load(schema?: IPublicTypeProjectSchema) {
 
   }

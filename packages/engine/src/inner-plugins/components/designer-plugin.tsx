@@ -10,12 +10,33 @@ export default defineComponent({
     engineConfig: Object,
     engineEditor: Object as PropType<Editor>
   },
+  async setup(props: any) {
+    const editor = props.engineEditor
+    try {
+      const assets = await editor.onceGot('assets')
+      const { components, packages, extraEnvironment, utils } = assets
+      return {
+        componentMetadatas: components || [],
+        library: packages || [],
+        utilsMetadata: utils || [],
+        extraEnvironment
+      }
+    } catch(e) {
+      return {
+        componentMetadatas: [],
+        library: [],
+        utilsMetadata: []
+      }
+    }
+  },
   render() {
-    const editor = this.engineEditor as Editor
+    const { engineEditor: editor, library } = this
     return <DesignerView 
-      designer={editor.get('designer')}
+      designer={editor!.get('designer')}
       class="lowcode-plugin-designer"
-      simulatorProps={{}}
+      simulatorProps={{
+        library
+      }}
     />
   }
 })

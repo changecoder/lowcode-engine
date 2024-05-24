@@ -8,13 +8,15 @@ import {
   PanelDockConfig,
   DialogDockConfig,
   isDockConfig,
-  isPanelDockConfig
+  isPanelDockConfig,
+  DividerConfig
 } from './types'
 import { WidgetContainer } from './widget'
 
 export interface ISkeleton {
   editor: IEditor
   readonly leftArea: Area<DockConfig | PanelDockConfig | DialogDockConfig>
+  readonly topArea: Area<DockConfig | DividerConfig | PanelDockConfig | DialogDockConfig>
   readonly leftFloatArea: Area<IPublicTypePanelConfig, Panel>
   readonly mainArea: Area<WidgetConfig | IPublicTypePanelConfig, Widget | Panel>
 
@@ -28,6 +30,7 @@ export class Skeleton implements ISkeleton {
   private panels = new Map<string, Panel>()
   private containers = new Map<string, WidgetContainer<any>>()
   readonly leftArea: Area<DockConfig | PanelDockConfig | DialogDockConfig>
+  readonly topArea: Area<DockConfig | DividerConfig | PanelDockConfig | DialogDockConfig>
   readonly leftFloatArea: Area<IPublicTypePanelConfig, Panel>
   readonly mainArea: Area<WidgetConfig | IPublicTypePanelConfig, Widget | Panel>
   readonly widgets: IWidget[] = []
@@ -42,6 +45,16 @@ export class Skeleton implements ISkeleton {
           return config;
         }
         return this.createWidget(config);
+      }
+    )
+    this.topArea = new Area(
+      this,
+      'topArea',
+      (config) => {
+        if (isWidget(config)) {
+          return config
+        }
+        return this.createWidget(config)
       }
     )
     this.leftFloatArea = new Area(
@@ -82,6 +95,9 @@ export class Skeleton implements ISkeleton {
       case 'leftArea':
       case 'left':
         return this.leftArea.add(parsedConfig as PanelDockConfig)
+      case 'topArea':
+      case 'top':
+        return this.topArea.add(parsedConfig as PanelDockConfig)
       case 'leftFloatArea':
         return this.leftFloatArea.add(parsedConfig as IPublicTypePanelConfig)
       case 'mainArea':
@@ -112,7 +128,7 @@ export class Skeleton implements ISkeleton {
     return widget
   }
   
-  createPanel(config: IPublicTypePanelConfig) {
+  createPanel(config: IPublicTypePanelConfig): any {
     const parsedConfig = { ...config}
     const panel = new Panel(this, parsedConfig)
     this.panels.set(panel.name, panel)

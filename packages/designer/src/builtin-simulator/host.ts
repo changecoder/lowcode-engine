@@ -22,6 +22,14 @@ const defaultSimulatorUrl = (() => {
   return urls
 })()
 
+const defaultEnvironment = [
+  assetItem(
+    AssetType.JSText,
+    'window.Vue=parent.Vue;window.__is_simulator_env__=true;',
+    undefined,
+    'vue'
+  )
+]
 export type LibraryItem = IPublicTypePackage & {
   package: string
   library: string
@@ -35,6 +43,10 @@ export class BuiltinSimulatorHost {
   readonly designer: IDesigner
   readonly emitter: IEventBus = createModuleEventBus('BuiltinSimulatorHost')
   private iframe?: HTMLIFrameElement
+  private contentWindow?: Window
+  private contentDocument?: Document
+  readonly asyncLibraryMap: { [key: string]: {} } = {}
+
   renderer?: any
   props: any = {}
 
@@ -79,9 +91,17 @@ export class BuiltinSimulatorHost {
         }
       })
     }
-    libraryAsset.unshift(assetItem(AssetType.JSText, libraryExportList.join('')))
-    libraryAsset.push(assetItem(AssetType.JSText, functionCallLibraryExportList.join('')))
+    if (libraryExportList?.length) {
+      libraryAsset.unshift(assetItem(AssetType.JSText, libraryExportList.join('')))
+    }
+    if (functionCallLibraryExportList?.length) {
+      libraryAsset.push(assetItem(AssetType.JSText, functionCallLibraryExportList.join('')))
+    }
     return libraryAsset
+  }
+
+  async setupComponents(library: LibraryItem) {
+
   }
 
   async mountContentFrame(iframe: HTMLIFrameElement | null): Promise<void> {
@@ -89,10 +109,17 @@ export class BuiltinSimulatorHost {
       return
     }
     this.iframe = iframe
+    this.contentWindow = iframe.contentWindow!
+    this.contentDocument = this.contentWindow.document
 
     const libraryAsset: AssetList = this.buildLibrary()
 
     const vendors = [
+      assetBundle(
+        this.get('environment') ||
+        defaultEnvironment,
+        AssetLevel.Environment
+      ),
       assetBundle(libraryAsset, AssetLevel.Library),
       assetBundle(
         this.get('simulatorUrl') ||

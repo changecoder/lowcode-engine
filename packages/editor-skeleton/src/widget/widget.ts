@@ -16,6 +16,7 @@ export function isWidget(obj: any): obj is IWidget {
 export class Widget implements IWidget {
   readonly name: string
   readonly isWidget = true
+  readonly align?: string
   
   get content(): VNode {
     const { content, contentProps = {} } = this.config
@@ -28,7 +29,8 @@ export class Widget implements IWidget {
   constructor(readonly skeleton: ISkeleton, readonly config: WidgetConfig) {
     this.skeleton = skeleton
     this.config = config
-    const { name } = config
+    const { name, props = {} } = config
     this.name = name
+    this.align = props.align
   }
 }

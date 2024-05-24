@@ -14,7 +14,13 @@ export interface IEditor extends IPublicModelEditor {
 
 export class Editor extends EventEmitter implements IEditor {
   private context = new Map()
-
+  private waits = new Map<
+    any,
+    Array<{
+      once?: boolean,
+      resolve: (data: any) => void
+    }>
+  >()
   eventBus: EventBus
   
   constructor() {
@@ -32,6 +38,25 @@ export class Editor extends EventEmitter implements IEditor {
       return this.setAssets(data)
     }
     this.context.set(key, data)
+  }
+
+  onceGot(keyOrType: any): Promise<any> {
+    const x = this.context.get(keyOrType)
+    if (x !== undefined) {
+      return Promise.resolve(x)
+    }
+    return new Promise((resolve) => {
+      this.setWait(keyOrType, resolve, true)
+    })
+  }
+
+  private setWait(key: any, resolve: (data: any) => void, once?: boolean) {
+    const waits = this.waits.get(key)
+    if (waits) {
+      waits.push({ resolve, once })
+    } else {
+      this.waits.set(key, [{ resolve, once }])
+    }
   }
 
   async setAssets(assets: IPublicTypeAssetsJson) {

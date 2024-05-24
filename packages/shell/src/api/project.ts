@@ -63,6 +63,14 @@ export class Project implements IPublicApiProject {
   }
 
   /**
+   * 导出 project
+   * @returns
+   */
+  exportSchema(stage: string = 'render') {
+    return this[projectSymbol].getSchema(stage)
+  }
+
+  /**
    * 导入 project
    * @param schema 待导入的 project 数据
    */

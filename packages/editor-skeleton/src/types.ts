@@ -9,6 +9,13 @@ import { IWidget } from './widget'
 export interface DockProps extends IPublicTypePanelDockProps {
 }
 
+export interface DividerConfig extends IPublicTypeWidgetBaseConfig {
+  type: 'Divider'
+  props?: {
+    align?: 'left' | 'right' | 'center'
+  }
+}
+
 export interface IDockBaseConfig extends IPublicTypeWidgetBaseConfig {
   props?: DockProps & {
     align?: 'left' | 'right' | 'bottom' | 'center' | 'top';

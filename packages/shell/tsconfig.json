@@ -5,5 +5,5 @@
   },
   "include": [
     "./src/"
-  ]
+, "../types/src/shell/model/engine-config.ts"  ]
 }

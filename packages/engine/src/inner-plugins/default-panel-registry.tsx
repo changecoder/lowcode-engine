@@ -1,4 +1,6 @@
-import DesignerPlugin from './components/designer-plugin'
+import { Suspense, defineAsyncComponent } from 'vue'
+
+const DesignerPlugin = defineAsyncComponent(() => import('./components/designer-plugin'))
 
 // 注册默认的面板
 export const defaultPanelRegistry = (editor: any) => {
@@ -10,10 +12,12 @@ export const defaultPanelRegistry = (editor: any) => {
           area: 'mainArea',
           name: 'designer',
           type: 'Widget',
-          content: <DesignerPlugin
-            engineConfig={config}
-            engineEditor={editor}
-          />
+          content: <Suspense>
+            <DesignerPlugin
+              engineConfig={config}
+              engineEditor={editor}
+            />
+          </Suspense>
         })
       }
     }

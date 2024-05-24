@@ -2,7 +2,8 @@ import { IPublicTypePlugin } from '@cc/lowcode-types'
 
 export interface ILowCodePluginManagerCore {
   register(
-    pluginModel: IPublicTypePlugin
+    pluginModel: IPublicTypePlugin,
+    pluginOptions?: any
   ): void
   init(): Promise<void>
 }

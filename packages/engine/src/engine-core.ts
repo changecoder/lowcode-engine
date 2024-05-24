@@ -9,7 +9,8 @@ import {
   Skeleton,
   Plugins,
   Material,
-  Project
+  Project,
+  Config
 } from '@cc/lowcode-shell'
 import {
   Designer,
@@ -17,7 +18,8 @@ import {
 } from '@cc/lowcode-designer'
 import {
   Editor,
-  IEditor
+  IEditor,
+  engineConfig
 } from '@cc/lowcode-editor-core'
 import { IPublicTypeDisposable, IPublicApiPlugins } from '@cc/lowcode-types'
 import { defaultPanelRegistry } from './inner-plugins/default-panel-registry'
@@ -42,12 +44,14 @@ const { project: innerProject } = designer
 const project = new Project(innerProject)
 const innerSkeleton = new InnerSkeleton(editor)
 editor.set('skeleton', innerSkeleton)
+const config = new Config(engineConfig)
 
 const pluginContextApiAssembler = {
   assembleApis: (context: any, pluginName: string) => {
     context.skeleton = new Skeleton(innerSkeleton, pluginName)
     context.material = material
     context.project = project
+    context.config = config
   }
 }
 const innerPlugins = new LowCodePluginManager(pluginContextApiAssembler)
@@ -55,7 +59,9 @@ const plugins = new Plugins(innerPlugins)
 editor.set('innerPlugins', innerPlugins)
 
 export {
-  plugins
+  plugins,
+  material,
+  project
 }
 
 registryInnerPlugin(editor, plugins)

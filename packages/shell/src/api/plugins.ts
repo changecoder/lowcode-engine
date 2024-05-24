@@ -21,9 +21,10 @@ export class Plugins implements IPublicApiPlugins {
   }
 
   async register(
-    pluginModel: IPublicTypePlugin
+    pluginModel: IPublicTypePlugin,
+    options?: any
   ): Promise<void> {
-    await this[pluginsSymbol].register(pluginModel)
+    await this[pluginsSymbol].register(pluginModel, options)
   }
 
   async init() {

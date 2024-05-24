@@ -55,10 +55,10 @@ export class LowCodePluginManager implements ILowCodePluginManager {
     this.contextApiAssembler = contextApiAssembler
   }
 
-  register(pluginModel: IPublicTypePlugin): void {
+  register(pluginModel: IPublicTypePlugin, options?: any): void {
     const { pluginName} = pluginModel
     const ctx = this._getLowCodePluginContext({ pluginName })
-    const config = pluginModel(ctx, {})
+    const config = pluginModel(ctx, { ...options })
     const plugin = new LowCodePluginRuntime(pluginName, this, config)
     this.plugins.push(plugin)
     this.pluginsMap.set(pluginName, plugin)

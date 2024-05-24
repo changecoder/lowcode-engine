@@ -19,12 +19,12 @@ export const Workbench = defineComponent({
   render() {
     const { className, topAreaItemClassName, skeleton } = this
     return <div class={['lc-workbench', className || '']}>
-      <TopArea itemClassName={topAreaItemClassName} />
+      <TopArea itemClassName={topAreaItemClassName} area={skeleton.topArea} />
       <div class="lc-workbench-body">
         <LeftArea area={skeleton.leftArea} />
         <LeftFloatPane area={skeleton.leftFloatArea as any} />
         <div class="lc-workbench-center">
-          <MainArea area={skeleton.mainArea}/>
+          <MainArea area={skeleton.mainArea as any}/>
         </div>
     </div>
     </div>

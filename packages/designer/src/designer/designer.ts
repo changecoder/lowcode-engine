@@ -1,4 +1,4 @@
-import { IPublicModelEditor, IPublicTypeAssetsJson } from '@cc/lowcode-types'
+import { IPublicModelEditor, IPublicTypeAssetsJson, IPublicTypeComponentMetadata } from '@cc/lowcode-types'
 import { IProject, Project } from '../project'
 
 import './designer.less'
@@ -42,7 +42,15 @@ export class Designer implements IDesigner {
   }
 
   async loadIncrementalAssets(incrementalAssets: IPublicTypeAssetsJson): Promise<void> {
-    
+    const { components, packages } = incrementalAssets
+    components && this.buildComponentMetasMap(components)
+    if (packages) {
+      await this.project.simulator?.setupComponents(packages)
+    }
+  }
+
+  buildComponentMetasMap(metas: IPublicTypeComponentMetadata[]) {
+
   }
 
   setProps(nextProps: DesignerProps) {
