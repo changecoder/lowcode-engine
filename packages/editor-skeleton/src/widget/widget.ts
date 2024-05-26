@@ -7,6 +7,9 @@ export interface IWidget {
   readonly skeleton: ISkeleton
   readonly content: any
   readonly align?: string
+  show(): void
+  hide(): void
+  toggle(): void
 }
 
 export function isWidget(obj: any): obj is IWidget {
@@ -32,5 +35,14 @@ export class Widget implements IWidget {
     const { name, props = {} } = config
     this.name = name
     this.align = props.align
+  }
+  show(): void {
+    throw new Error('Method not implemented.')
+  }
+  hide(): void {
+    throw new Error('Method not implemented.')
+  }
+  toggle(): void {
+    throw new Error('Method not implemented.')
   }
 }

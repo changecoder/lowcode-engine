@@ -8,7 +8,7 @@ import { nodePolyfills } from 'vite-plugin-node-polyfills'
 import express from 'express'
 // 启动静态资源服务
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const PORT = 5555
+const PORT = 5099
 
 const app = express()
 app.use(express.static(resolve(__dirname, '../dist')))
@@ -21,14 +21,14 @@ const libraries = [
   {
     entry: resolve(__dirname, '../packages/engine/src/index.ts'),
     name: 'CCLowCodeEngine',
-    fileName: () => 'lowcode-engine.js',
-    assetFileNames: 'lowcode-engine.css'
+    fileName: () => 'js/lowcode-engine.js',
+    assetFileNames: 'css/lowcode-engine.css'
   },
   {
     entry: resolve(__dirname, '../packages/vue-simulator-renderer/src/index.ts'),
     name: 'SimulatorRenderer',
-    fileName: () => 'vue-simulator-renderer.js',
-    assetFileNames: 'vue-simulator-renderer.css'
+    fileName: () => 'js/vue-simulator-renderer.js',
+    assetFileNames: 'css/vue-simulator-renderer.css'
   }
 ]
 

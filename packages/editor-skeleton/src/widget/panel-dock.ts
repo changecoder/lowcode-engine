@@ -1,4 +1,4 @@
-import { VNode, h } from 'vue'
+import { VNode, h, ref } from 'vue'
 import { IWidget } from '.'
 import { ISkeleton } from '../skeleton'
 import { PanelDockConfig } from '../types'
@@ -9,14 +9,25 @@ export class PanelDock implements IWidget {
   readonly isWidget = true
   readonly isPanelDock = true
   readonly panel: any
+  private inited = false
+  private _visible = ref(true)
+  private _content: VNode
+  get visible() {
+    return this._visible.value
+  }
 
   get content(): VNode {
+    if (this.inited) {
+      return this._content
+    }
+    this.inited = true
     const { props } = this.config
-    return h(PanelDockView, {
+    this._content = h(PanelDockView, {
       icon: props?.icon,
       className: 'dock-view actived',
       handleClick: this.clickHandler
     })
+    return this._content
   }
 
   constructor(readonly skeleton: ISkeleton, readonly config: PanelDockConfig) {
@@ -32,6 +43,29 @@ export class PanelDock implements IWidget {
         content
       })
     }
+  }
+
+  setVisible(flag: boolean) {
+    if (flag === this._visible.value) {
+      return
+    }
+    if (flag) {
+      this._visible.value = true
+    } else if (this.inited) {
+      this._visible.value = false
+    }
+  }
+
+  hide() {
+    this.setVisible(false)
+  }
+
+  show() {
+    this.setVisible(true)
+  }
+
+  toggle() {
+    this.setVisible(!this._visible)
   }
 
   togglePanel = () => {

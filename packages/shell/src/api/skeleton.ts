@@ -38,4 +38,29 @@ export class Skeleton implements IPublicApiSkeleton {
       return new SkeletonItem(item)
     }
   }
+
+  getPanel(name: string) {
+    const item = this[skeletonSymbol].getPanel(name)
+    if (!item) {
+      return
+    }
+
+    return new SkeletonItem(item)
+  }
+
+  /**
+   * 显示面板
+   * @param name
+   */
+  showPanel(name: string) {
+    this[skeletonSymbol].getPanel(name)?.show()
+  }
+  
+  /**
+   * 隐藏面板
+   * @param name
+   */
+  hidePanel(name: string) {
+    this[skeletonSymbol].getPanel(name)?.hide()
+  }
 }

@@ -14,6 +14,8 @@ export interface IDesigner {
   simulatorComponent?: any
 
   loadIncrementalAssets(incrementalAssets: IPublicTypeAssetsJson): Promise<void>
+
+  postEvent(event: string, ...args: any[]): void
 }
 
 export class Designer implements IDesigner {
@@ -56,5 +58,9 @@ export class Designer implements IDesigner {
   setProps(nextProps: DesignerProps) {
     this.simulatorComponent = nextProps.simulatorComponent
     this.simulatorProps = nextProps.simulatorProps
+  }
+
+  postEvent(event: string, ...args: any[]) {
+    this.editor.eventBus.emit(`designer.${event}`, ...args)
   }
 }

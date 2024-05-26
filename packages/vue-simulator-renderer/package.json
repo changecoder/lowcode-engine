@@ -17,6 +17,7 @@
     "build:watch": "vite build --watch"
   },
   "dependencies": {
+    "@cc/lowcode-vue-renderer": "1.0.0",
     "vue": "^3.4.21"
   },
   "devDependencies": {

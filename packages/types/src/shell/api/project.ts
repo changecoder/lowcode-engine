@@ -23,6 +23,21 @@ export interface IBaseApiProject<DocumentModel> {
   openDocument(doc?: string | IPublicTypeRootSchema | undefined): DocumentModel | null
 
   /**
+   * 创建一个 document
+   * create a document
+   * @param data
+   * @returns
+   */
+  createDocument(data?: IPublicTypeRootSchema): DocumentModel | null
+
+  /**
+   * 删除一个 document
+   * remove a document
+   * @param doc
+   */
+  removeDocument(doc: DocumentModel): void
+
+  /**
    * 导入 project schema
    * import schema to project
    * @param schema 待导入的 project 数据

@@ -1,8 +1,10 @@
-import simulator from './simulator'
+import renderer from './renderer'
 import './index.less'
 
 const win = window as any
 
 if (typeof win !== 'undefined') {
-  win.SimulatorRenderer = simulator
+  win.SimulatorRenderer = renderer
 }
+
+export default renderer

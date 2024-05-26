@@ -11,7 +11,7 @@ export default defineComponent({
   },
   render() {
     const { area } = this
-    return   <div class={['lc-left-float-pane', 'lc-area-visible']}>
+    return   <div class={['lc-left-float-pane', area.visible ? 'lc-area-visible' : '']}>
       { area.container.items.map(item => item.content) }
     </div>
   }

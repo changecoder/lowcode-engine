@@ -1,3 +1,14 @@
+import { ref } from 'vue'
+import { isPanel } from '.'
+
+export interface Activeable {
+  setActive(flag: boolean): void
+}
+
+function isActiveable(obj: any): obj is Activeable {
+  return obj && obj.setActive
+}
+
 export interface WidgetItem {
   name: string;
 }
@@ -6,13 +17,20 @@ export class WidgetContainer<T extends WidgetItem = any, G extends WidgetItem = 
   items: T[] = []
 
   private maps: { [name: string]: T } = {}
+  private _current = ref<T & Activeable |null>(null)
+
+  get current() {
+    return this._current.value
+  }
 
   constructor(
     readonly name: string,
-    private handle: (item: T | G) => T
+    private handle: (item: T | G) => T,
+    private exclusive: boolean = false
    ) {
     this.name = name
     this.handle = handle
+    this.exclusive = exclusive
   }
 
   add(item: T | G): T {
@@ -28,11 +46,74 @@ export class WidgetContainer<T extends WidgetItem = any, G extends WidgetItem = 
       this.items.push(item)
     }
     this.maps[item.name] = item
-
+    if (isPanel(item)) {
+      item.setParent(this)
+    }
     return item
   }
 
   get(name: string): T | null {
     return this.maps[name] || null
+  }
+
+  remove(item: string | T): number {
+    const thing = typeof item === 'string' ? this.get(item) : item
+    if (!thing) {
+      return -1
+    }
+    const i = this.items.indexOf(thing)
+    if (i > -1) {
+      this.items.splice(i, 1)
+    }
+    delete this.maps[thing.name]
+    return i
+  }
+
+  active(nameOrItem?: T | string | null) {
+    let item: any = nameOrItem
+    if (nameOrItem && typeof nameOrItem === 'string') {
+      item = this.get(nameOrItem)
+    }
+    if (!isActiveable(item)) {
+      item = null
+    }
+
+    if (this.exclusive) {
+      if (this._current.value === item) {
+        return
+      }
+      if (this._current.value) {
+        this._current.value.setActive(false)
+      }
+      this._current.value = item
+    }
+
+    if (item) {
+      item.setActive(true)
+    }
+
+    if (item) {
+      item.setActive(true)
+    }
+  }
+
+  unactive(nameOrItem?: T | string | null) {
+    let item: any = nameOrItem
+    if (nameOrItem && typeof nameOrItem === 'string') {
+      item = this.get(nameOrItem)
+    }
+    if (!isActiveable(item)) {
+      item = null
+    }
+    if (this._current.value?.name === item.name) {
+      this._current.value = null
+    }
+    if (item) {
+      item.setActive(false)
+    }
+  }
+
+  unactiveAll() {
+    Object.keys(this.maps).forEach((name) => this.unactive(name))
   }
 }

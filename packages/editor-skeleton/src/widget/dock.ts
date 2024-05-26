@@ -6,6 +6,7 @@ import { DockConfig } from '../types'
 export class Dock implements IWidget {
   readonly name: string
   readonly isWidget = true
+  visible = true
 
   get content(): VNode {
     const { content, contentProps = {} } = this.config
@@ -19,5 +20,24 @@ export class Dock implements IWidget {
     this.skeleton = skeleton
     const { name } = config
     this.name = name
+  }
+
+  setVisible(flag: boolean) {
+    if (flag === this.visible) {
+      return
+    }
+    this.visible = flag
+  }
+
+  hide() {
+    this.setVisible(false)
+  }
+
+  show() {
+    this.setVisible(true)
+  }
+
+  toggle() {
+    this.setVisible(!this.visible)
   }
 }

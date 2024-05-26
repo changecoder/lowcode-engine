@@ -8,7 +8,23 @@ export class SkeletonItem implements IPublicModelSkeletonItem {
     return this[skeletonItemSymbol].name
   }
 
+  get visible() {
+    return this[skeletonItemSymbol].visible
+  }
+
   constructor(skeletonItem: any) {
     this[skeletonItemSymbol] = skeletonItem
+  }
+
+  hide() {
+    this[skeletonItemSymbol].hide()
+  }
+
+  show() {
+    this[skeletonItemSymbol].show()
+  }
+
+  toggle() {
+    this[skeletonItemSymbol].toggle()
   }
 }

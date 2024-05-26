@@ -18,11 +18,13 @@ export interface ISkeleton {
   readonly leftArea: Area<DockConfig | PanelDockConfig | DialogDockConfig>
   readonly topArea: Area<DockConfig | DividerConfig | PanelDockConfig | DialogDockConfig>
   readonly leftFloatArea: Area<IPublicTypePanelConfig, Panel>
+  readonly leftFixedArea: Area<IPublicTypePanelConfig, Panel>
   readonly mainArea: Area<WidgetConfig | IPublicTypePanelConfig, Widget | Panel>
 
+  getPanel(name: string): Panel | undefined
   add(config: IPublicTypeSkeletonConfig, extraConfig?: Record<string, any>): any
 
-  createContainer(name: string, andle: (item: any) => any): WidgetContainer
+  createContainer(name: string, handle: (item: any) => any, exclusive?: boolean): WidgetContainer
   createPanel(config: IPublicTypePanelConfig): Panel
 }
 
@@ -32,6 +34,7 @@ export class Skeleton implements ISkeleton {
   readonly leftArea: Area<DockConfig | PanelDockConfig | DialogDockConfig>
   readonly topArea: Area<DockConfig | DividerConfig | PanelDockConfig | DialogDockConfig>
   readonly leftFloatArea: Area<IPublicTypePanelConfig, Panel>
+  readonly leftFixedArea: Area<IPublicTypePanelConfig, Panel>
   readonly mainArea: Area<WidgetConfig | IPublicTypePanelConfig, Widget | Panel>
   readonly widgets: IWidget[] = []
 
@@ -45,7 +48,8 @@ export class Skeleton implements ISkeleton {
           return config;
         }
         return this.createWidget(config);
-      }
+      },
+      false
     )
     this.topArea = new Area(
       this,
@@ -55,7 +59,8 @@ export class Skeleton implements ISkeleton {
           return config
         }
         return this.createWidget(config)
-      }
+      },
+      false
     )
     this.leftFloatArea = new Area(
       this,
@@ -65,7 +70,19 @@ export class Skeleton implements ISkeleton {
           return config
         }
         return this.createPanel(config)
-      }
+      },
+      true
+    )
+    this.leftFixedArea = new Area(
+      this,
+      'leftFixedArea',
+      (config) => {
+        if (isPanel(config)) {
+          return config
+        }
+        return this.createPanel(config)
+      },
+      true
     )
     this.mainArea = new Area(
       this,
@@ -75,8 +92,13 @@ export class Skeleton implements ISkeleton {
           return config as Widget
         }
         return this.createWidget(config) as Widget
-      }
+      },
+      true
     )
+  }
+
+  getPanel(name: string): Panel | undefined {
+    return this.panels.get(name)
   }
 
   add(config: IPublicTypeSkeletonConfig, extraConfig?: Record<string, any>): any {
@@ -98,6 +120,8 @@ export class Skeleton implements ISkeleton {
       case 'topArea':
       case 'top':
         return this.topArea.add(parsedConfig as PanelDockConfig)
+      case 'leftFixedArea':
+        return this.leftFixedArea.add(parsedConfig as IPublicTypePanelConfig)
       case 'leftFloatArea':
         return this.leftFloatArea.add(parsedConfig as IPublicTypePanelConfig)
       case 'mainArea':
@@ -135,8 +159,8 @@ export class Skeleton implements ISkeleton {
     return panel
   }
 
-  createContainer(name: string, handle: (item: any) => any) {
-    const container = new WidgetContainer(name, handle)
+  createContainer(name: string, handle: (item: any) => any, exclusive?: boolean) {
+    const container = new WidgetContainer(name, handle, exclusive)
     this.containers.set(name, container)
     return container
   }

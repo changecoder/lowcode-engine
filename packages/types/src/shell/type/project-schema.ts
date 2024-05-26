@@ -15,5 +15,9 @@ export interface IPublicTypeProjectSchema<T = IPublicTypeRootSchema> {
    * 是长度固定为 1 的数组，即数组内仅包含根容器的描述（低代码业务组件容器类型）
    */
   componentsTree: T[],
-  componentsMap: any
+  componentsMap: any,
+  /**
+   * 当前应用配置信息
+   */
+  config?: any
 }

@@ -46,6 +46,7 @@ export class BuiltinSimulatorHost {
   private contentWindow?: Window
   private contentDocument?: Document
   readonly asyncLibraryMap: { [key: string]: {} } = {}
+  readonly libraryMap: { [key: string]: string } = {}
 
   renderer?: any
   props: any = {}
@@ -84,6 +85,7 @@ export class BuiltinSimulatorHost {
 
     if (_library && _library.length) {
       _library.forEach((item) => {
+        this.libraryMap[item.package] = item.library
         if (item.editUrls) {
           libraryAsset.push(item.editUrls)
         } else if (item.urls) {
@@ -127,7 +129,7 @@ export class BuiltinSimulatorHost {
         AssetLevel.Runtime
       )
     ]
-
+    // 准备 iframe 内容、依赖库注入
     const renderer = await createSimulator(this, iframe, vendors)
 
     renderer.run()
