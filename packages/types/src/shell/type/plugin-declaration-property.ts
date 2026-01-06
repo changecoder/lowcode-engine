@@ -1,0 +1,12 @@
+import { IPublicTypePreferenceValueType } from './preference-value-type';
+
+export interface IPublicTypePluginDeclarationProperty {
+  key: string;
+  description: string;
+  type: string;
+  default?: IPublicTypePreferenceValueType;
+  useMultipleLineTextInput?: boolean;
+  enum?: any[];
+  enumDescriptions?: string[];
+  deprecationMessage?: string;
+}

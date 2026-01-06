@@ -1,0 +1,17 @@
+{
+  "name": "@cc/lowcode-shell",
+  "version": "1.0.0",
+  "main": "src/index",
+  "files": [
+    "src"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@cc/lowcode-editor-core": "workspace:^",
+    "@cc/lowcode-utils": "workspace:^",
+    "@cc/lowcode-editor-skeleton": "workspace:^"
+  },
+  "devDependencies": {
+    "@cc/lowcode-types": "workspace:^"
+  }
+}
