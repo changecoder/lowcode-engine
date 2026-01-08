@@ -13,6 +13,7 @@
     "@cc/lowcode-designer": "workspace:^",
     "@cc/lowcode-editor-core": "workspace:^",
     "@cc/lowcode-editor-skeleton": "workspace:^",
+    "@cc/lowcode-plugin-outline-pane": "workspace:^",
     "@cc/lowcode-shell": "workspace:^",
     "@cc/lowcode-utils": "workspace:^",
     "vue": "^3.5.26"

@@ -9,6 +9,7 @@ import {
   IPublicTypePluginRegisterOptions,
   IPublicTypePreferenceValueType,
   PluginPreference,
+  IPublicModelPluginContext,
 } from '@cc/lowcode-types';
 import { engineConfig } from '@cc/lowcode-editor-core';
 import { getLogger, isPlainObject } from '@cc/lowcode-utils';

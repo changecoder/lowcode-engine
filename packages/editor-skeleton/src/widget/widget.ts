@@ -65,10 +65,7 @@ export class Widget implements IWidget {
     return this._disabled.value;
   }
 
-  constructor(
-    readonly skeleton: ISkeleton,
-    readonly config: WidgetConfig
-  ) {
+  constructor(readonly skeleton: ISkeleton, readonly config: WidgetConfig) {
     this.skeleton = skeleton;
     this.config = config;
     const { props = {}, name } = config;

@@ -7,7 +7,7 @@ import {
   IPublicTypeWidgetBaseConfig,
   IPublicTypeWidgetConfigArea,
 } from '@cc/lowcode-types';
-import { IWidget } from '../widget/widget';
+import { IWidget } from './widget';
 
 export interface DockProps extends IPublicTypePanelDockProps {}
 

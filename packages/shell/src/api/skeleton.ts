@@ -1,6 +1,7 @@
 import {
   IPublicApiSkeleton,
   IPublicModelSkeletonItem,
+  IPublicTypeConfigTransducer,
   IPublicTypeSkeletonConfig,
 } from '@cc/lowcode-types';
 import { ISkeleton } from '@cc/lowcode-editor-skeleton';
@@ -17,11 +18,7 @@ export class Skeleton implements IPublicApiSkeleton {
     return this[innerSkeletonSymbol];
   }
 
-  constructor(
-    skeleton: ISkeleton,
-    pluginName: string,
-    readonly workspaceMode: boolean = false
-  ) {
+  constructor(skeleton: ISkeleton, pluginName: string, readonly workspaceMode: boolean = false) {
     this[innerSkeletonSymbol] = skeleton;
     this.pluginName = pluginName;
   }
@@ -38,5 +35,9 @@ export class Skeleton implements IPublicApiSkeleton {
     if (item) {
       return new SkeletonItem(item);
     }
+  }
+
+  registerConfigTransducer(fn: IPublicTypeConfigTransducer, level: number, id?: string) {
+    this[skeletonSymbol].registerConfigTransducer(fn, level, id);
   }
 }

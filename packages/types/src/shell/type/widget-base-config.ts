@@ -19,7 +19,7 @@ export interface IPublicTypeWidgetBaseConfig {
    */
   area?: IPublicTypeWidgetConfigArea;
   props?: Record<string, any>;
-  content?: string | Component | VNode | IPublicTypePanelConfig[];
+  content?: string | Component | VNode | IPublicTypePanelConfig;
   contentProps?: Record<string, any>;
 
   /**

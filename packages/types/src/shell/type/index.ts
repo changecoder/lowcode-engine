@@ -14,6 +14,8 @@ export * from './component-sort';
 
 export * from './composite-value';
 
+export * from './config-transducer';
+
 export * from './configure';
 
 export * from './container-schema';

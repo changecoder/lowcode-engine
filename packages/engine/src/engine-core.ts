@@ -1,7 +1,10 @@
 import { createApp } from 'vue';
 import {
+  IEditor,
   ILowCodePluginContextApiAssembler,
   ILowCodePluginContextPrivate,
+  IPublicApiPlugins,
+  IPublicTypeDisposable,
   IPublicTypeEngineOptions,
   IPublicTypePluginMeta,
   PluginPreference,
@@ -11,6 +14,18 @@ import { commonEvent, Editor, engineConfig } from '@cc/lowcode-editor-core';
 import { Plugins, Common, Event, Skeleton } from '@cc/lowcode-shell';
 import { LowCodePluginManager } from '@cc/lowcode-designer';
 import { Skeleton as InnerSkeleton } from '@cc/lowcode-editor-skeleton';
+import { OutlinePlugin } from '@cc/lowcode-plugin-outline-pane';
+
+async function registryInnerPlugin(
+  editor: IEditor,
+  plugins: IPublicApiPlugins
+): Promise<IPublicTypeDisposable> {
+  await plugins.register(OutlinePlugin, {}, { autoInit: true });
+
+  return () => {
+    plugins.delete(OutlinePlugin.pluginName);
+  };
+}
 
 const pluginContextApiAssembler: ILowCodePluginContextApiAssembler = {
   assembleApis: (
@@ -41,6 +56,8 @@ engineConfig.set('isOpenSource', isOpenSource);
 export const version = VERSION_PLACEHOLDER;
 engineConfig.set('ENGINE_VERSION', version);
 let engineContainer: HTMLElement;
+
+registryInnerPlugin(editor, plugins);
 
 export const init = async (
   container: HTMLElement,

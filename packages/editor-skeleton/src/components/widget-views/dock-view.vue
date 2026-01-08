@@ -13,6 +13,13 @@ import { DockProps } from '../../types';
 const {title, icon, size, description, onClick, className } = defineProps<DockProps>();
 const titleProp = computed(() => composeTitle(title, icon, description));
 const classNameProp = computed(() => {
-  return 'lc-dock ' + className + (size ? ` lc-dock-${size}` : '');
+  let value =  'lc-dock';
+  if (className) {
+    value += ` ${className}`;
+  }
+  if (size) {
+    value += ` lc-dock-${size}`;
+  }
+  return value;
 });
 </script>

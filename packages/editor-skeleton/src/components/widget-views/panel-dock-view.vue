@@ -6,10 +6,10 @@
   />
 </template>
 <script setup lang="ts">
-import { IPublicTypePanelDockProps } from '@cc/lowcode-types';
 import { PanelDock } from '../../widget';
 import DockView from './dock-view.vue';
-const { dock, className, onClick, ...props } = defineProps<IPublicTypePanelDockProps & {
+import { DockProps } from '../../types';
+const { dock, className, onClick, ...props } = defineProps<DockProps & {
   dock: PanelDock
 }>()
 const onClickProp = () => {

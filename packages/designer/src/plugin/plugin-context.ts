@@ -1,10 +1,13 @@
+import { createModuleEventBus } from '@cc/lowcode-editor-core';
 import {
   ILowCodePluginContextApiAssembler,
   ILowCodePluginContextPrivate,
   IPluginContextOptions,
   IPluginPreferenceMananger,
+  IPublicApiEvent,
   IPublicApiLogger,
   IPublicApiPlugins,
+  IPublicApiSkeleton,
   IPublicModelPluginContext,
   IPublicTypePluginDeclaration,
   IPublicTypePreferenceValueType,
@@ -28,11 +31,15 @@ export default class PluginContext
   preference!: IPluginPreferenceMananger;
   logger!: IPublicApiLogger;
   plugins!: IPublicApiPlugins;
+  skeleton!: IPublicApiSkeleton;
+  event!: IPublicApiEvent;
+  pluginEvent: IPublicApiEvent;
   constructor(
     options: IPluginContextOptions,
     contextApiAssembler: ILowCodePluginContextApiAssembler
   ) {
     const { pluginName = 'anonymous', meta = {} } = options;
+    this.pluginEvent = createModuleEventBus(pluginName, 200);
     contextApiAssembler.assembleApis(this, pluginName, meta);
   }
 

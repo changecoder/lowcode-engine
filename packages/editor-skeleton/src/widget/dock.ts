@@ -54,10 +54,7 @@ export class Dock implements IWidget {
     return this._body;
   }
 
-  constructor(
-    readonly skeleton: ISkeleton,
-    readonly config: DockConfig
-  ) {
+  constructor(readonly skeleton: ISkeleton, readonly config: DockConfig) {
     this.skeleton = skeleton;
     this.config = config;
     const { props = {}, name } = config;

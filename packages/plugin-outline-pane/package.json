@@ -1,0 +1,15 @@
+{
+  "name": "@cc/lowcode-plugin-outline-pane",
+  "version": "1.0.0",
+  "main": "src/index",
+  "files": [
+    "src"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@cc/lowcode-types": "workspace:^"
+  },
+  "dependencies": {
+    "vue": "^3.5.26"
+  }
+}

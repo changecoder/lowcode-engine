@@ -1,5 +1,5 @@
 import { IPublicModelSkeletonItem } from '../model';
-import { IPublicTypeSkeletonConfig } from '../type';
+import { IPublicTypeConfigTransducer, IPublicTypeSkeletonConfig } from '../type';
 
 export interface IPublicApiSkeleton {
   /**
@@ -13,4 +13,13 @@ export interface IPublicApiSkeleton {
     config: IPublicTypeSkeletonConfig,
     extraConfig?: Record<string, any>
   ): IPublicModelSkeletonItem | undefined;
+
+  /**
+   * 注册一个面板的配置转换器（transducer）
+   */
+  registerConfigTransducer(
+    transducer: IPublicTypeConfigTransducer,
+    level: number,
+    id?: string
+  ): void;
 }
