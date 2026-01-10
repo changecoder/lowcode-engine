@@ -1,4 +1,4 @@
-import { ref, shallowReactive } from 'vue';
+import { ref, shallowReactive, toRaw } from 'vue';
 import { hasOwnProperty } from '@cc/lowcode-utils';
 import { isPanel } from './panel';
 
@@ -52,7 +52,7 @@ export class WidgetContainer<T extends WidgetItem = any, G extends WidgetItem = 
     }
 
     if (this.exclusive) {
-      if (this.current === item) {
+      if (toRaw(this.current) === item) {
         return;
       }
       if (this.current) {
@@ -74,7 +74,7 @@ export class WidgetContainer<T extends WidgetItem = any, G extends WidgetItem = 
     if (!isActiveable(item)) {
       item = null;
     }
-    if (this.current === item) {
+    if (toRaw(this.current) === item) {
       this._current.value = null;
     }
     if (item) {

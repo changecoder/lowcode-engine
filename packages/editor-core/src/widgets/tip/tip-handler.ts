@@ -1,5 +1,6 @@
 import { IEventBus, IPublicTypeTipConfig } from '@cc/lowcode-types';
 import { createModuleEventBus } from '../../event-bus';
+import { ref } from 'vue';
 
 export interface TipOptions extends IPublicTypeTipConfig {
   target: HTMLElement;
@@ -58,34 +59,38 @@ const findTip = (target: HTMLElement | null): TipOptions | null => {
 
 class TipHandler {
   private emitter: IEventBus = createModuleEventBus('TipHandler');
-  tip: TipOptions | null = null;
+  private _tip = ref<TipOptions | null>(null);
   private showDelay: number | null = null;
   private hideDelay: number | null = null;
+
+  get tip() {
+    return this._tip.value;
+  }
 
   setTarget(target: HTMLElement) {
     const tip = findTip(target);
     if (tip) {
       if (this.tip) {
         if ((this.tip as any).target === (tip as any).target) {
-          this.tip = tip;
+          this._tip.value = tip;
           return;
         }
         if (this.showDelay) {
           clearTimeout(this.showDelay);
           this.showDelay = null;
-          this.tip = null;
+          this._tip.value = null;
         } else {
           if (this.hideDelay) {
             clearTimeout(this.hideDelay);
             this.hideDelay = null;
           }
-          this.tip = tip;
+          this._tip.value = tip;
           this.emitter.emit('tipchange');
           return;
         }
       }
 
-      this.tip = tip;
+      this._tip.value = tip;
       if (this.hideDelay) {
         clearTimeout(this.hideDelay);
         this.hideDelay = null;
@@ -105,7 +110,7 @@ class TipHandler {
           this.hideDelay = null;
         }, 100) as any;
       }
-      this.tip = null;
+      this._tip.value = null;
       this.emitter.emit('tipchange');
     }
   }
@@ -119,7 +124,7 @@ class TipHandler {
       clearTimeout(this.showDelay);
       this.showDelay = null;
     }
-    this.tip = null;
+    this._tip.value = null;
     this.emitter.emit('tipchange');
   }
 

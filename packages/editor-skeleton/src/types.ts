@@ -61,3 +61,14 @@ export interface LeftAreaData {
   bottom: Array<VNode>;
   top: Array<VNode>;
 }
+
+export interface TopAreaData {
+  left: Array<VNode>;
+  center: Array<VNode>;
+  right: Array<VNode>;
+}
+
+export interface LeftAreaData {
+  bottom: Array<VNode>;
+  top: Array<VNode>;
+}

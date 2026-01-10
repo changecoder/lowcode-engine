@@ -51,10 +51,7 @@ export class Editor extends EventEmitter implements IEditor {
   ' _eventsType'?: EventConfig | undefined;
   ' _emitType'?: EventConfig | undefined;
 
-  constructor(
-    readonly viewName: string = 'global',
-    readonly workspaceMode: boolean = false
-  ) {
+  constructor(readonly viewName: string = 'global', readonly workspaceMode: boolean = false) {
     super();
     this.setMaxListeners(200);
   }

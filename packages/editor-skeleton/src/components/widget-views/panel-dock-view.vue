@@ -1,7 +1,7 @@
 <template>
   <dock-view 
     v-bind="props" 
-    :className="`${className} ${dock.actived ? 'actived' : ''}`"
+    :className="`${className}${dock.actived ? ' actived' : ''}`"
     :onClick="onClickProp"
   />
 </template>

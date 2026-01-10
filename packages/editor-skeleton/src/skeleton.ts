@@ -20,7 +20,7 @@ import {
 } from './widget';
 import { Area } from './area';
 import { isPanel, Panel } from './widget/panel';
-import { isVNode } from 'vue';
+import { isVNode, markRaw } from 'vue';
 import { engineConfig } from '@cc/lowcode-editor-core';
 
 const logger = new Logger({ level: 'warn', bizName: 'skeleton' });
@@ -148,7 +148,9 @@ export class Skeleton implements ISkeleton {
     checkVisible: () => boolean = () => true,
     defaultSetCurrent = false
   ) {
-    const container = new WidgetContainer(name, handle, exclusive, checkVisible, defaultSetCurrent);
+    const container = markRaw(
+      new WidgetContainer(name, handle, exclusive, checkVisible, defaultSetCurrent)
+    );
     this.containers.set(name, container);
     return container;
   }
@@ -207,7 +209,7 @@ export class Skeleton implements ISkeleton {
       }
     );
 
-    let { area } = parsedConfig;
+    const { area } = parsedConfig;
     switch (area) {
       case 'leftArea':
       case 'left':

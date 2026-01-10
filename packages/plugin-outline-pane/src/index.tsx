@@ -23,7 +23,7 @@ export const OutlinePlugin = (ctx: IPublicModelPluginContext, options: any) => {
           name: MasterPaneName,
           props: {
             icon: IconOutline,
-            description: 'Outline Tree',
+            description: '大纲树',
           },
           content: OutlinePaneContext,
         },

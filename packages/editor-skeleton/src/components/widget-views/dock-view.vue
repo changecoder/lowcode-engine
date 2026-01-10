@@ -14,7 +14,7 @@ const {title, icon, size, description, onClick, className } = defineProps<DockPr
 const titleProp = computed(() => composeTitle(title, icon, description));
 const classNameProp = computed(() => {
   let value =  'lc-dock';
-  if (className) {
+  if (className !== 'undefined') {
     value += ` ${className}`;
   }
   if (size) {
