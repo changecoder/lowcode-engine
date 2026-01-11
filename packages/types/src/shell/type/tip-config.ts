@@ -1,4 +1,4 @@
-import { IPublicTypeI18nData } from './i8n-data';
+import { IPublicTypeI18nData } from './i18n-data';
 import { VueNode } from './vue-node';
 
 export interface IPublicTypeTipConfig {

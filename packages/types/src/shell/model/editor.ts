@@ -10,10 +10,8 @@ import {
   IPublicTypeEditorValueKey,
 } from '../type';
 
-export interface IPublicModelEditor extends StrictEventEmitter<
-  EventEmitter,
-  GlobalEvent.EventConfig
-> {
+export interface IPublicModelEditor
+  extends StrictEventEmitter<EventEmitter, GlobalEvent.EventConfig> {
   get: <T = undefined, KeyOrType = any>(
     keyOrType: KeyOrType,
     opt?: IPublicTypeEditorGetOptions

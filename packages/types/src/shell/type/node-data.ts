@@ -1,4 +1,4 @@
-import { IPublicTypeI18nData } from './i8n-data';
+import { IPublicTypeI18nData } from './i18n-data';
 import { IPublicTypeNodeSchema } from './node-schema';
 import { IPublicTypeDOMText, IPublicTypeJSExpression } from './value-type';
 

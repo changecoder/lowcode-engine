@@ -1,42 +1,33 @@
 <template>
   <div :class="['lc-workbench', className]">
-    <top-area :area="skeleton.topArea" :itemClassName="topAreaItemClassName" />
+    <top-area :area="skeleton.topArea" :item-class-name="topAreaItemClassName" />
     <div class="lc-workbench-body">
       <left-area :area="skeleton.leftArea" />
       <left-float-pane :area="skeleton.leftFloatArea" />
       <left-fixed-pane :area="skeleton.leftFixedArea" />
+      <div class="lc-workbench-center">
+        <toolbar :area="skeleton.toolbar" />
+        <main-area :area="skeleton.mainArea" />
+        <bottom-area :area="skeleton.bottomArea" />
+      </div>
     </div>
     <tip-container />
   </div>
 </template>
 <script lang="ts" setup>
-import { TipContainer } from '@cc/lowcode-editor-core'
+import { TipContainer } from '@cc/lowcode-editor-core';
 import { ISkeleton } from '../skeleton';
-import TopArea from './top-area.vue'
-import LeftArea from './left-area.vue'
-import LeftFloatPane from './left-float-pane.vue'
-import LeftFixedPane from './left-fixed-pane.vue'
+import TopArea from './top-area.vue';
+import LeftArea from './left-area.vue';
+import LeftFloatPane from './left-float-pane.vue';
+import LeftFixedPane from './left-fixed-pane.vue';
+import Toolbar from './toolbar.vue';
+import MainArea from './main-area.vue';
+import BottomArea from './bottom-area.vue';
+import './workbench.less';
 defineProps<{
-  skeleton: ISkeleton,
-  className?: string,
-  topAreaItemClassName?: string
-}>()
+  skeleton: ISkeleton;
+  className?: string;
+  topAreaItemClassName?: string;
+}>();
 </script>
-<style lang="less" scoped>
-@import './theme.less';
-.lc-workbench {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  background-color: var(--color-background);
-}
-.lc-workbench-body {
-  flex: 1;
-  display: flex;
-  min-height: 0;
-  position: relative;
-}
-</style>
-<style lang="less">
-@import './workbench.less';
-</style>

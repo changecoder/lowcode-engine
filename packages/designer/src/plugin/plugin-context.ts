@@ -8,6 +8,7 @@ import {
   IPublicApiLogger,
   IPublicApiPlugins,
   IPublicApiSkeleton,
+  IPublicModelEngineConfig,
   IPublicModelPluginContext,
   IPublicTypePluginDeclaration,
   IPublicTypePreferenceValueType,
@@ -31,6 +32,7 @@ export default class PluginContext
   preference!: IPluginPreferenceMananger;
   logger!: IPublicApiLogger;
   plugins!: IPublicApiPlugins;
+  config!: IPublicModelEngineConfig;
   skeleton!: IPublicApiSkeleton;
   event!: IPublicApiEvent;
   pluginEvent: IPublicApiEvent;

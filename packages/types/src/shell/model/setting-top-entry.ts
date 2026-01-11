@@ -2,7 +2,7 @@ import { IPublicModelNode, IPublicModelSettingField } from '.';
 
 export interface IPublicModelSettingTopEntry<
   Node = IPublicModelNode,
-  SettingField = IPublicModelSettingField,
+  SettingField = IPublicModelSettingField
 > {
   /**
    * 返回所属的节点实例

@@ -1,5 +1,5 @@
 export interface IDataSourceRuntimeContext<
-  TState extends Record<string, unknown> = Record<string, unknown>,
+  TState extends Record<string, unknown> = Record<string, unknown>
 > {
   /** 当前数据源的内容 */
   state: TState;

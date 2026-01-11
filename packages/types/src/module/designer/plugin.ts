@@ -3,6 +3,7 @@ import {
   IPublicApiLogger,
   IPublicApiPlugins,
   IPublicApiSkeleton,
+  IPublicModelEngineConfig,
   IPublicModelPluginContext,
   IPublicTypePlugin,
   IPublicTypePluginConfig,
@@ -75,6 +76,7 @@ export interface ILowCodePluginContextPrivate {
   set plugins(plugins: IPublicApiPlugins);
   set event(event: IPublicApiEvent);
   set skeleton(skeleton: IPublicApiSkeleton);
+  set config(config: IPublicModelEngineConfig);
 }
 
 export interface ILowCodePluginContextApiAssembler {

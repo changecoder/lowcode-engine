@@ -91,9 +91,10 @@ export interface IBaseModelSettingField<SettingTopEntry, SettingField, Component
   onEffect(action: () => void): IPublicTypeDisposable;
 }
 
-export interface IPublicModelSettingField extends IBaseModelSettingField<
-  IPublicModelSettingTopEntry,
-  IPublicModelSettingField,
-  IPublicModelComponentMeta,
-  IPublicModelNode
-> {}
+export interface IPublicModelSettingField
+  extends IBaseModelSettingField<
+    IPublicModelSettingTopEntry,
+    IPublicModelSettingField,
+    IPublicModelComponentMeta,
+    IPublicModelNode
+  > {}

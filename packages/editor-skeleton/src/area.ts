@@ -16,7 +16,7 @@ export class Area<C extends IPublicTypeWidgetBaseConfig = any, T extends IWidget
   implements IArea<C, T>
 {
   readonly container: WidgetContainer<T, C>;
-
+  private lastCurrent: T | null = null;
   private _visible = ref(true);
 
   get visible() {
@@ -62,5 +62,27 @@ export class Area<C extends IPublicTypeWidgetBaseConfig = any, T extends IWidget
 
   remove(config: T | string): number {
     return this.container.remove(config);
+  }
+
+  setVisible(flag: boolean) {
+    if (this.exclusive) {
+      const { current } = this.container;
+      if (flag && !current) {
+        this.container.active(this.lastCurrent || this.container.getAt(0));
+      } else if (current) {
+        this.lastCurrent = current;
+        this.container.unactive(current);
+      }
+      return;
+    }
+    this._visible.value = flag;
+  }
+
+  hide() {
+    this.setVisible(false);
+  }
+
+  show() {
+    this.setVisible(true);
   }
 }

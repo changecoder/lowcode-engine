@@ -11,19 +11,24 @@ import {
 } from '@cc/lowcode-types';
 import { isPlainObject, Logger } from '@cc/lowcode-utils';
 import { commonEvent, Editor, engineConfig } from '@cc/lowcode-editor-core';
-import { Plugins, Common, Event, Skeleton } from '@cc/lowcode-shell';
+import { Plugins, Common, Event, Skeleton, Config } from '@cc/lowcode-shell';
 import { LowCodePluginManager } from '@cc/lowcode-designer';
 import { Skeleton as InnerSkeleton } from '@cc/lowcode-editor-skeleton';
 import { OutlinePlugin } from '@cc/lowcode-plugin-outline-pane';
+
+import { defaultPanelRegistry } from './inner-plugins/default-panel-registry';
 
 async function registryInnerPlugin(
   editor: IEditor,
   plugins: IPublicApiPlugins
 ): Promise<IPublicTypeDisposable> {
+  const defaultPanelRegistryPlugin = defaultPanelRegistry(editor);
   await plugins.register(OutlinePlugin, {}, { autoInit: true });
+  await plugins.register(defaultPanelRegistryPlugin);
 
   return () => {
     plugins.delete(OutlinePlugin.pluginName);
+    plugins.delete(defaultPanelRegistryPlugin.pluginName);
   };
 }
 
@@ -38,6 +43,7 @@ const pluginContextApiAssembler: ILowCodePluginContextApiAssembler = {
     context.plugins = plugins;
     context.event = new Event(commonEvent, { prefix: eventPrefix });
     context.skeleton = new Skeleton(innerSkeleton, pluginName, false);
+    context.config = config;
   },
 };
 
@@ -48,13 +54,15 @@ const plugins = new Plugins(innerPlugins).toProxy();
 const event = new Event(commonEvent, { prefix: 'common' });
 const logger = new Logger({ level: 'warn', bizName: 'common' });
 const common = new Common(editor, innerSkeleton);
+const config = new Config(engineConfig);
 
-export { plugins, event, logger, common };
+export { config, common, event, logger, plugins };
 
 export const isOpenSource = true;
 engineConfig.set('isOpenSource', isOpenSource);
 export const version = VERSION_PLACEHOLDER;
 engineConfig.set('ENGINE_VERSION', version);
+
 let engineContainer: HTMLElement;
 
 registryInnerPlugin(editor, plugins);

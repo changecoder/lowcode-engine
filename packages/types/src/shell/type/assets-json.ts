@@ -19,11 +19,6 @@ export interface IPublicTypeAssetsJson {
    */
   components: Array<IPublicTypeComponentDescription | IPublicTypeRemoteComponentDescription>;
   /**
-   * 组件分类列表，用来描述物料面板
-   * @deprecated 最新版物料面板已不需要此描述
-   */
-  componentList?: any[];
-  /**
    * 业务组件分类列表，用来描述物料面板
    * @deprecated 最新版物料面板已不需要此描述
    */

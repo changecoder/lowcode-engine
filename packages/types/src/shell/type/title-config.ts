@@ -1,4 +1,4 @@
-import { IPublicTypeI18nData } from './i8n-data';
+import { IPublicTypeI18nData } from './i18n-data';
 import { IPublicTypeIconType } from './icon-type';
 import { TipContent } from './tip-content';
 import { IPublicTypeTitleContent } from './title-content';

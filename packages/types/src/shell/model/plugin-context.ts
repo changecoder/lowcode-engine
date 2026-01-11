@@ -1,5 +1,6 @@
 import { IPluginPreferenceMananger } from '../../module';
 import { IPublicApiSkeleton } from '../api';
+import { IPublicModelEngineConfig } from '.';
 
 export interface IPublicModelPluginContext {
   /**
@@ -7,4 +8,5 @@ export interface IPublicModelPluginContext {
    */
   preference: IPluginPreferenceMananger;
   get skeleton(): IPublicApiSkeleton;
+  get config(): IPublicModelEngineConfig;
 }

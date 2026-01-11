@@ -74,7 +74,7 @@ export class WidgetContainer<T extends WidgetItem = any, G extends WidgetItem = 
     if (!isActiveable(item)) {
       item = null;
     }
-    if (toRaw(this.current) === item) {
+    if (toRaw(this.current) === toRaw(item)) {
       this._current.value = null;
     }
     if (item) {
