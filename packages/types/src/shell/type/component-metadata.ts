@@ -75,14 +75,6 @@ export interface IPublicTypeComponentMetadata {
    */
   configure?: IPublicTypeFieldConfig[] | IPublicTypeConfigure;
 
-  /**
-   * @deprecated, use advanced instead
-   */
-  experimental?: IPublicTypeAdvanced;
-
-  /**
-   * @todo 待补充文档
-   */
   schema?: IPublicTypeComponentSchema;
 
   /**

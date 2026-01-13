@@ -70,6 +70,7 @@ export * from './preference-value-type';
 export * from './project-schema';
 
 export * from './prop-config';
+export * from './props-list';
 export * from './props-map';
 
 export * from './reference';
