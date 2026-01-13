@@ -4,3 +4,8 @@ export * from './unique-id';
 export * from './create-content';
 export * from './create-icon';
 export * from './has-own-property';
+export * from './is-css-url';
+export * from './create-defer';
+export * from './script';
+export * from './asset';
+export * from './build-components';
