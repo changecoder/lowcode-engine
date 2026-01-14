@@ -14,5 +14,8 @@
   "devDependencies": {
     "@cc/lowcode-types": "workspace:^",
     "@types/semver": "^7.7.1"
+  },
+  "peerDependencies": {
+    "vue": "^3.5.26"
   }
 }

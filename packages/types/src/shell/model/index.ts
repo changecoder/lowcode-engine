@@ -14,6 +14,7 @@ export * from './plugin-instance';
 
 export * from './preference';
 
+export * from './prop';
 export * from './props';
 
 export * from './setting-field';

@@ -7,13 +7,14 @@ import {
   IPublicTypePropsMap,
 } from '../type';
 import { IPublicModelDocumentModel } from './document-model';
-import { IPublicModelNodeChildren, IPublicModelProps } from '.';
+import { IPublicModelNodeChildren, IPublicModelProp, IPublicModelProps } from '.';
 
 export interface IBaseModelNode<
   Document = IPublicModelDocumentModel,
   Node = IPublicModelNode,
   NodeChildren = IPublicModelNodeChildren,
-  Props = IPublicModelProps
+  Props = IPublicModelProps,
+  Prop = IPublicModelProp
 > {
   /**
    * 节点 id
@@ -47,6 +48,10 @@ export interface IBaseModelNode<
    * 获取当前节点的孩子节点模型
    */
   get children(): NodeChildren | null;
+  /**
+   * 当前节点为插槽节点时，返回节点对应的属性实例
+   */
+  get slotFor(): Prop | null | undefined;
   /**
    * 节点上挂载的插槽节点们
    * get slots of this node
