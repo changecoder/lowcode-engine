@@ -82,6 +82,9 @@ export * from './root-schema';
 export * from './set-value-options';
 export * from './setter-config';
 export * from './setter-type';
+
+export * from './simulator-renderer';
+
 export * from './snippet';
 
 export * from './tip-config';

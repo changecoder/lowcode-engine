@@ -9,3 +9,4 @@ export * from './create-defer';
 export * from './script';
 export * from './asset';
 export * from './build-components';
+export * from './get-public-path';
