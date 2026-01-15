@@ -2,12 +2,19 @@ import { shallowReactive } from 'vue';
 import { EventEmitter } from 'events';
 import {
   EditorConfig,
+  EventConfig,
   IEditor,
+  IPublicTypeAssetsJson,
+  IPublicTypeComponentDescription,
   IPublicTypeEditorGetResult,
   IPublicTypeEditorValueKey,
+  IPublicTypeRemoteComponentDescription,
 } from '@cc/lowcode-types';
+import { AssetLoader } from '@cc/lowcode-utils';
 import { EventBus } from './event-bus';
 import { globalLocale } from './intl/global-locale';
+import { engineConfig } from './config';
+import { assetsTransform } from './utils/assets-transform';
 
 EventEmitter.defaultMaxListeners = 100;
 
@@ -54,6 +61,7 @@ export class Editor extends EventEmitter implements IEditor {
   constructor(readonly viewName: string = 'global', readonly workspaceMode: boolean = false) {
     super();
     this.setMaxListeners(200);
+    this.eventBus = new EventBus(this);
   }
 
   async setAssets(assets: IPublicTypeAssetsJson) {
@@ -121,12 +129,14 @@ export class Editor extends EventEmitter implements IEditor {
                 value.forEach((d: any, i: number) => {
                   const exportName = [preExportName, i.toString()].filter(d => !!d).join('.');
                   const subName = [preSubName, i.toString()].filter(d => !!d).join('.');
-                  Array.isArray(d)
-                    ? setArrayAssets(d, exportName, subName)
-                    : setAssetsComponent(d, {
-                        exportName,
-                        subName,
-                      });
+                  if (Array.isArray(d)) {
+                    setArrayAssets(d, exportName, subName);
+                  } else {
+                    setAssetsComponent(d, {
+                      exportName,
+                      subName,
+                    });
+                  }
                 });
               }
               if ((window as any)[exportName]) {

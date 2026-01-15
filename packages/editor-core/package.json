@@ -9,6 +9,7 @@
   "dependencies": {
     "@cc/lowcode-utils": "workspace:^",
     "intl-messageformat": "^11.0.8",
+    "power-di": "^2.4.55",
     "store": "^2.0.12",
     "vue": "^3.5.26"
   },
