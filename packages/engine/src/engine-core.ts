@@ -10,13 +10,15 @@ import {
   PluginPreference,
 } from '@cc/lowcode-types';
 import { isPlainObject, Logger } from '@cc/lowcode-utils';
-import { commonEvent, Editor, engineConfig } from '@cc/lowcode-editor-core';
+import { commonEvent, Editor, engineConfig, globalContext } from '@cc/lowcode-editor-core';
 import { Plugins, Common, Event, Skeleton, Config } from '@cc/lowcode-shell';
-import { LowCodePluginManager } from '@cc/lowcode-designer';
+import { LowCodePluginManager, Designer } from '@cc/lowcode-designer';
 import { Skeleton as InnerSkeleton } from '@cc/lowcode-editor-skeleton';
 import { OutlinePlugin } from '@cc/lowcode-plugin-outline-pane';
 
 import { defaultPanelRegistry } from './inner-plugins/default-panel-registry';
+
+import { shellModelFactory } from './modules/shell-model-factory';
 
 async function registryInnerPlugin(
   editor: IEditor,
@@ -44,13 +46,23 @@ const pluginContextApiAssembler: ILowCodePluginContextApiAssembler = {
     context.event = new Event(commonEvent, { prefix: eventPrefix });
     context.skeleton = new Skeleton(innerSkeleton, pluginName, false);
     context.config = config;
+    editor.set('pluginContext', context);
   },
 };
 
 const editor = new Editor();
+globalContext.register(editor, Editor);
+globalContext.register(editor, 'editor');
+
+const designer = new Designer({ editor, shellModelFactory });
+editor.set('designer', designer);
 const innerSkeleton = new InnerSkeleton(editor);
+editor.set('skeleton', innerSkeleton);
 const innerPlugins = new LowCodePluginManager(pluginContextApiAssembler);
 const plugins = new Plugins(innerPlugins).toProxy();
+editor.set('innerPlugins', innerPlugins);
+editor.set('plugins', plugins);
+
 const event = new Event(commonEvent, { prefix: 'common' });
 const logger = new Logger({ level: 'warn', bizName: 'common' });
 const common = new Common(editor, innerSkeleton);
@@ -72,8 +84,6 @@ export const init = async (
   options?: IPublicTypeEngineOptions,
   pluginPreference?: PluginPreference
 ) => {
-  await destroy();
-
   let engineOptions = null;
   if (isPlainObject(container)) {
     engineOptions = container;
@@ -101,5 +111,3 @@ export const init = async (
     topAreaItemClassName: 'engine-actionitem',
   }).mount(engineContainer);
 };
-
-export const destroy = async () => {};
