@@ -1,7 +1,7 @@
-import { SkeletonItem } from './model';
+import { Node, SkeletonItem } from './model';
 
 import { Config, Common, Event, getEvent, Plugins, Skeleton } from './api';
 
 export * from './symbols';
 
-export { Config, Common, Event, getEvent, Plugins, Skeleton, SkeletonItem };
+export { Config, Common, Node, Event, getEvent, Plugins, Skeleton, SkeletonItem };
