@@ -1,0 +1,60 @@
+@scope: lc-simulator;
+
+.@{scope} {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+
+  &-canvas {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+
+    &-viewport {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+    }
+  }
+
+  &-device-mobile {
+    left: 50%;
+    width: 375px;
+    top: 16px;
+    bottom: 16px;
+    max-height: calc(100% - 32px);
+    max-width: calc(100% - 32px);
+    transform: translateX(-50%);
+    box-shadow: 0 2px 10px 0 var(--color-block-background-shallow, rgba(31,56,88,.15));
+  }
+
+  &-device-default {
+    top: var(--simulator-top-distance, 16px);
+    right: var(--simulator-right-distance, 16px);
+    bottom: var(--simulator-bottom-distance, 16px);
+    left: var(--simulator-left-distance, 16px);
+    width: auto;
+    box-shadow: 0 1px 4px 0 var(--color-block-background-shallow, rgba(31, 50, 88, 0.125));
+  }
+
+  &-content {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    &-frame {
+      border: none;
+      transform-origin: 0 0;
+      height: 100%;
+      width: 100%;
+    }
+  }
+}

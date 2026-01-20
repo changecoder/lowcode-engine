@@ -7,6 +7,7 @@
 import { Designer, DesignerProps } from './designer';
 import { ProjectView } from '../project';
 import { computed } from 'vue';
+import './designer.less';
 const { designer = undefined, ...designerProps } = defineProps<
   DesignerProps & { designer?: Designer }
 >();

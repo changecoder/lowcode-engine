@@ -9,6 +9,7 @@
   "dependencies": {
     "@cc/lowcode-editor-core": "workspace:^",
     "@cc/lowcode-utils": "workspace:^",
+    "@cc/lowcode-vue-simulator-renderer": "workspace:^",
     "semver": "^7.7.3"
   },
   "devDependencies": {

@@ -1,2 +1,3 @@
-export { default as BuiltinSimulatorHostView } from './host-view.vue';
+export { BuiltinSimulatorHostView } from './host-view';
 export * from './host';
+export * from './renderer';

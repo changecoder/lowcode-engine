@@ -2,9 +2,11 @@ import { Component, ref } from 'vue';
 import {
   IPublicModelEditor,
   IPublicTypeComponentMetadata,
+  IPublicTypeNpmInfo,
   IShellModelFactory,
 } from '@cc/lowcode-types';
 import { IProject, Project } from '../project';
+import { IComponentMeta } from '..';
 
 export interface IDesigner {
   readonly shellModelFactory: IShellModelFactory;
@@ -13,6 +15,9 @@ export interface IDesigner {
   viewName: string | undefined;
 
   get editor(): IPublicModelEditor;
+  get simulatorComponent(): Component | undefined;
+  get componentsMap(): { [key: string]: IPublicTypeNpmInfo | Component };
+  refreshComponentMetasMap(): void;
 }
 
 export interface DesignerProps {
@@ -33,6 +38,7 @@ export class Designer implements IDesigner {
   private props?: DesignerProps;
   private _simulatorComponent = ref<Component>();
   private _simulatorProps = ref<Record<string, any>>();
+  private _componentMetasMap = new Map<string, IComponentMeta>();
 
   viewName: string | undefined;
 
@@ -55,6 +61,19 @@ export class Designer implements IDesigner {
     };
   }
 
+  get componentsMap(): { [key: string]: IPublicTypeNpmInfo | Component } {
+    const maps: any = {};
+    this._componentMetasMap.forEach((config, key) => {
+      const metaData = config.getMetadata();
+      if (metaData.devMode === 'lowCode') {
+        maps[key] = metaData.schema;
+      } else {
+        maps[key] = config.npm;
+      }
+    });
+    return maps;
+  }
+
   constructor(props: DesignerProps) {
     const { editor, viewName, shellModelFactory } = props;
     this.editor = editor;
@@ -62,6 +81,13 @@ export class Designer implements IDesigner {
     this.shellModelFactory = shellModelFactory;
 
     this.project = new Project(this, props.defaultSchema, viewName);
+  }
+
+  /**
+   * 刷新 componentMetasMap，可间接触发模拟器里的 buildComponents
+   */
+  refreshComponentMetasMap() {
+    this._componentMetasMap = new Map(this._componentMetasMap);
   }
 
   setProps(nextProps: DesignerProps) {

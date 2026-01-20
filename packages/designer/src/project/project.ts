@@ -1,5 +1,9 @@
 import { createModuleEventBus } from '@cc/lowcode-editor-core';
-import { IEventBus, IPublicTypeProjectSchema } from '@cc/lowcode-types';
+import {
+  IEventBus,
+  IPublicTypeProjectSchema,
+  IPublicTypeSimulatorRenderer,
+} from '@cc/lowcode-types';
 import { ISimulatorHost } from '../simulator';
 import { IDesigner } from '../designer';
 
@@ -7,9 +11,11 @@ export interface IProject {
   get designer(): IDesigner;
 
   get simulator(): ISimulatorHost | null;
+
+  setRendererReady(renderer: IPublicTypeSimulatorRenderer): void;
 }
 
-export class Project {
+export class Project implements IProject {
   private emitter: IEventBus = createModuleEventBus('Project');
   private data: IPublicTypeProjectSchema = {
     version: '1.0.0',
@@ -18,6 +24,7 @@ export class Project {
     i18n: {},
   };
   private _simulator?: ISimulatorHost;
+  private isRendererReady: boolean = false;
 
   get simulator(): ISimulatorHost | null {
     return this._simulator || null;
@@ -43,5 +50,10 @@ export class Project {
       i18n: {},
       ...schema,
     };
+  }
+
+  setRendererReady(renderer: any) {
+    this.isRendererReady = true;
+    this.emitter.emit('lowcode_engine_renderer_ready', renderer);
   }
 }

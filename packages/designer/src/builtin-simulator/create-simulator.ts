@@ -73,17 +73,61 @@ export function createSimulator(
     })
     .join('');
 
+  // 使用 DOM API 替代 document.write() 以避免浏览器警告
   doc.open();
-  doc.write(`
-<!doctype html>
-<html class="engine-design-mode">
-<head><meta charset="utf-8"/>
-  ${styleFrags}
-</head>
-<body>
-  ${scriptFrags}
-</body>
-</html>`);
+  
+  // 创建完整的 HTML 结构
+  const html = doc.createElement('html');
+  html.className = 'engine-design-mode';
+  
+  const head = doc.createElement('head');
+  const metaCharset = doc.createElement('meta');
+  metaCharset.setAttribute('charset', 'utf-8');
+  head.appendChild(metaCharset);
+  
+  // 使用临时容器解析样式标签
+  const styleContainer = doc.createElement('div');
+  styleContainer.innerHTML = styleFrags;
+  
+  // 将样式和 meta 标签添加到 head
+  Array.from(styleContainer.children).forEach(node => {
+    head.appendChild(node);
+  });
+  
+  // 创建 body
+  const body = doc.createElement('body');
+  
+  // 使用临时容器解析脚本标签，需要重新创建以确保脚本执行
+  const scriptContainer = doc.createElement('div');
+  scriptContainer.innerHTML = scriptFrags;
+  
+  // 重新创建脚本元素以确保它们能够执行
+  Array.from(scriptContainer.querySelectorAll('script')).forEach(oldScript => {
+    const newScript = doc.createElement('script');
+    if (oldScript.src) {
+      newScript.src = oldScript.src;
+    } else {
+      newScript.textContent = oldScript.textContent;
+    }
+    if (oldScript.type) {
+      newScript.type = oldScript.type;
+    }
+    if (oldScript.getAttribute('data-id')) {
+      newScript.setAttribute('data-id', oldScript.getAttribute('data-id')!);
+    }
+    body.appendChild(newScript);
+  });
+  
+  html.appendChild(head);
+  html.appendChild(body);
+  
+  // 替换文档内容
+  if (doc.documentElement) {
+    doc.replaceChild(html, doc.documentElement);
+  } else {
+    doc.appendChild(html);
+  }
+  
   doc.close();
 
   return new Promise(resolve => {

@@ -1,6 +1,7 @@
 import { computed, ref } from 'vue';
 import { Asset, AssetLevel, AssetList, AssetType, IPublicTypePackage } from '@cc/lowcode-types';
-import { assetBundle, assetItem, getPublicPath, UtilsMetadata } from '@cc/lowcode-utils';
+import { assetBundle, assetItem, UtilsMetadata } from '@cc/lowcode-utils';
+import renderer from '@cc/lowcode-vue-simulator-renderer';
 import { ISimulatorHost } from '../simulator';
 import { IProject, Project } from '../project';
 import { Designer, IDesigner } from '../designer';
@@ -30,6 +31,11 @@ export interface BuiltinSimulatorProps {
   [key: string]: any;
 }
 
+export interface DeviceStyleProps {
+  canvas?: object;
+  viewport?: object;
+}
+
 const defaultEnvironment = [
   assetItem(
     AssetType.JSText,
@@ -38,20 +44,6 @@ const defaultEnvironment = [
     'vue'
   ),
 ];
-
-const defaultSimulatorUrl = (() => {
-  const publicPath = getPublicPath();
-  let urls;
-  const [_, prefix = '', dev] = /^(.+?)(\/js)?\/?$/.exec(publicPath) || [];
-  if (dev) {
-    urls = [`${prefix}/css/simulator-renderer.css`, `${prefix}/js/simulator-renderer.js`];
-  } else if (process.env.NODE_ENV === 'production') {
-    urls = [`${prefix}/simulator-renderer.css`, `${prefix}/simulator-renderer.js`];
-  } else {
-    urls = [`${prefix}/simulator-renderer.css`, `${prefix}/simulator-renderer.js`];
-  }
-  return urls;
-})();
 
 export class BuiltinSimulatorHost implements ISimulatorHost<BuiltinSimulatorProps> {
   readonly isSimulator = true;
@@ -82,9 +74,26 @@ export class BuiltinSimulatorHost implements ISimulatorHost<BuiltinSimulatorProp
     return this._contentDocument.value;
   }
 
+  get deviceStyle(): DeviceStyleProps | undefined {
+    return this.get('deviceStyle');
+  }
+
+  get deviceClassName(): string | undefined {
+    return this.get('deviceClassName');
+  }
+
+  get device(): string {
+    return this.get('device') || 'default';
+  }
+
+  get componentsMap() {
+    return this.designer.componentsMap;
+  }
+
   constructor(project: Project, designer: Designer) {
     this.project = project;
     this.designer = designer;
+    this._renderer = renderer;
   }
 
   get(key: string): any {
@@ -95,10 +104,6 @@ export class BuiltinSimulatorHost implements ISimulatorHost<BuiltinSimulatorProp
       );
     }
     return this._props.value[key];
-  }
-
-  connect(renderer: any) {
-    this._renderer = renderer;
   }
 
   mountViewport(viewport: HTMLElement | null) {

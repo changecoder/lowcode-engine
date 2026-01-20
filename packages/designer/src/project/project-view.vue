@@ -10,7 +10,7 @@
 </template>
 <script setup lang="ts">
 import { Designer } from '../designer';
+import './project.less';
 import { BuiltinSimulatorHostView } from '../builtin-simulator';
-
-const { designer } = defineProps<{ designer: Designer }>();
+defineProps<{ designer: Designer }>();
 </script>
